@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+body {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+
+}
+aside {
+    border-right: 1px solid black;
+    overflow: scroll;
+}
+aside p {
+    margin: 3em 0 1em;
+}
+li {
+    margin-bottom: .5em;
+}
+.date-filter {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+.date-filter a, .month {
+    grid-column: 1/-1;
+}
+.day {
+    border: 1px solid black;
+}
+main {
+    background: lightgrey;
+}
+.eventList h2, .eventList img:not(.featuredImg) {
+    display: inline-block;
+}
+.singleEvent {
+    padding: 30px;
+}
+.featuredImg {
+    width: 80%;
+    height: auto;
+}
