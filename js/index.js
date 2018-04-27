@@ -153,16 +153,31 @@ plusMonth.addEventListener('click', function(){
 
 /////////// show events on calender ///////////
 // fetch all events and highlight dates with event
-// ??? how to exclude one category of post in the url?
+// ??? how to exclude one category, ie. including all other categories, of posts in the url???
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
     .then(e=>e.json()).then(getEventDates);
 function getEventDates(eventDates){
     eventDates.forEach(matchDate);
     function matchDate(d){
         let eventStartDate;
-        if(d.acf["date-start"]){ // exclude board games, which don't have event start time
+        let eventEndDate;
+        if(d.acf["date-start"]){ // use this to exclude board games, which don't have event start time
             eventStartDate = d.acf["date-start"].slice(4,8); // not working on year for this project, so only need the last digits in form of mmdd
             document.querySelector('.d'+ eventStartDate).classList.add('match');
+        }
+        if(d.acf["date-start"] && d.acf["date-end"]){ // for events that is held over multiple days
+            eventStartDate = d.acf["date-start"].slice(4,8);
+            eventEndDate = d.acf["date-end"].slice(4,8);
+            let startNr = parseInt(eventStartDate, 10);
+            let endNr = parseInt(eventEndDate, 10);
+            for(let i = startNr; i<=endNr; i++){
+                if(i<1000){
+                    i ="0" + i;
+                } else {
+                    i = i.toString();
+                }
+                document.querySelector('.d'+ i).classList.add('match');
+            }
         }
     }
 }
@@ -180,6 +195,21 @@ function clickOnDay(d){
             es.forEach(matchDate);
             function matchDate(e){
                 if(e.acf["date-start"] && (e.acf["date-start"].slice(4) == clickedDate)){
+                    updateEventList();
+                }
+                else if(e.acf["date-start"] && e.acf["date-end"]){ // for the case that an event is held over multiple days, which means the clicked date may not necessarily be the same as the starting date
+                    let postId = e.id;
+                    let startNr = parseInt(e.acf["date-start"].slice(4,8), 10);
+                    let endNr = parseInt(e.acf["date-end"].slice(4,8), 10);
+                    let clickedDateNr = parseInt(clickedDate, 10);
+                    if((startNr <= clickedDateNr) && (clickedDateNr <= endNr)){
+                        updateEventList();
+                    }
+                }
+
+
+
+                function updateEventList(){
                     // overwrite current eventlist with matched event(s)
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);
@@ -203,19 +233,20 @@ function clickOnDay(d){
                             }
                         }
                     }
-
-
-
-
-
-
-
-
-
                     newEventList.appendChild(clone2);
                     eventList.innerHTML = newEventList.innerHTML;
                     lookingForData = true;
                 }
+
+
+
+
+
+
+
+
+
+
             }
         }
     }
