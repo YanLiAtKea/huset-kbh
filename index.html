@@ -10,13 +10,13 @@
     <aside>
         <p>FILTER by event type:</p>
         <ul class="type-filter">
-            <li><a href="index.html">CLEAR FILTER</a></li>
+            <li><a href="index.html">ALL TYPES of Events</a></li>
         </ul>
         <P>Filter by event date</P>
         <div class="date-filter">
-            <a href="index.html">CLEAR FILTER</a>
-            <p class="minusMonth">-</p>
-            <p class="plusMonth">+</p>
+            <a href="index.html">CLEAR date</a>
+            <p class="minusMonth button">prev</p>
+            <p class="plusMonth button">next</p>
             <div class="month hide">
                 <p><span> </span><span>1</span><span>Jan</span></p>
                 <div class="days"></div>
@@ -71,6 +71,13 @@
        <div class="eventList"></div>
        <template class="singleEvent">
            <div class="singleEvent">
+               <h2></h2><img src="" alt="event type icon">
+               <h1></h1>
+               <img class="featuredImg" src="">
+           </div>
+       </template>
+       <template class="singleEventOnDate">
+           <div class="singleEventOnDate">
                <h2></h2><img src="" alt="event type icon">
                <h1></h1>
                <img class="featuredImg" src="">

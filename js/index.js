@@ -21,7 +21,7 @@ function getMajorTypes(allCategories){
 }
 
 /////////// load event list in pages///////////
-let template = document.querySelector(".singleEvent").content;
+let template = document.querySelector("template.singleEvent").content;
 let eventList = document.querySelector(".eventList");
 let lookingForData = false;
 let pageNr = 1;
@@ -45,7 +45,9 @@ function listAllEventsInPages(allEvents){
     }
     lookingForData = false;
     allEvents.forEach(showSingleEvent);
-    function showSingleEvent(singleEvent){
+
+}
+function showSingleEvent(singleEvent){
         if (singleEvent.categories.indexOf(12)>-1 || singleEvent.categories.indexOf(10)<0){ // exclude the category of board games in the DB, which are not events
             let clone = template.cloneNode(true);
             clone.querySelector('h2').innerHTML = singleEvent.acf["major_type"]; // use innerHTML cuz title include html entities and tags
@@ -71,7 +73,6 @@ function listAllEventsInPages(allEvents){
             eventList.appendChild(clone);
         }
     }
-}
 let checkBottom = setInterval(function(){
   if(bottomVisible() && lookingForData===false){
       console.log('load next page');
@@ -151,20 +152,71 @@ plusMonth.addEventListener('click', function(){
 })
 
 /////////// show events on calender ///////////
-// fetch all events
-// ??? how to exclude one category of post?
+// fetch all events and highlight dates with event
+// ??? how to exclude one category of post in the url?
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
     .then(e=>e.json()).then(getEventDates);
 function getEventDates(eventDates){
-    let i=0;
     eventDates.forEach(matchDate);
     function matchDate(d){
         let eventStartDate;
         if(d.acf["date-start"]){ // exclude board games, which don't have event start time
             eventStartDate = d.acf["date-start"].slice(4,8); // not working on year for this project, so only need the last digits in form of mmdd
             document.querySelector('.d'+ eventStartDate).classList.add('match');
-            i++;
         }
-        console.log(i, eventStartDate);
+    }
+}
+// click on date to see event(s) on that day
+let allDays = document.querySelectorAll('.day');
+allDays.forEach(clickOnDay);
+function clickOnDay(d){
+    d.addEventListener('click', filterByDate);
+    function filterByDate(){
+        let clickedDate = d.className.slice(5, 9); // get the date in format mmdd
+        fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
+            .then(e=>e.json()).then(lookForDate);
+        let newEventList = document.createElement('div');
+        function lookForDate(es){
+            es.forEach(matchDate);
+            function matchDate(e){
+                if(e.acf["date-start"] && (e.acf["date-start"].slice(4) == clickedDate)){
+                    // overwrite current eventlist with matched event(s)
+                    let template2 = document.querySelector('template.singleEventOnDate').content;
+                    let clone2 = template2.cloneNode(true);
+                    clone2.querySelector('h1').innerHTML = e.title.rendered;
+                    clone2.querySelector('h2').innerHTML = e.acf["major_type"];
+                    if(e._embedded["wp:featuredmedia"]){
+                        clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url)
+                    }
+                    let acfs = Object.keys(e.acf);// get the list of all custom fields keys
+                    acfs.forEach(getSpecialCustomField);
+                    function getSpecialCustomField(cf){
+                        // get event details
+                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "description"){
+                            let cfName = cf;
+                            let p = document.createElement('p');
+                            p.className = "p-cf, " + cfName; // for styling
+                            let index = acfs.indexOf(cf);
+                            p.textContent = cfName + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
+                            if (Object.values(e.acf)[index]) {
+                                clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
+                            }
+                        }
+                    }
+
+
+
+
+
+
+
+
+
+                    newEventList.appendChild(clone2);
+                    eventList.innerHTML = newEventList.innerHTML;
+                    lookingForData = true;
+                }
+            }
+        }
     }
 }

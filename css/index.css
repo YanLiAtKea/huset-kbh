@@ -4,6 +4,9 @@
     box-sizing: border-box;
     position: relative;
 }
+a {
+    display: block;
+}
 body {
     display: grid;
     grid-template-columns: 2fr 7fr;
@@ -13,14 +16,21 @@ aside {
     border-right: 1px solid black;
     overflow: scroll;
 }
-aside p {
+aside p:not(.button) {
     margin: 3em 0 1em;
+}
+p.button {
+    display: inline-block;
+    margin: 1em 2em;
 }
 li {
     margin-bottom: .5em;
 }
 .month p span {
     margin: 1em;
+}
+.month p span:nth-of-type(2){
+    display: none;
 }
 .days {
     display: grid;
@@ -45,7 +55,7 @@ main {
 .eventList h2, .eventList img:not(.featuredImg) {
     display: inline-block;
 }
-.singleEvent {
+.singleEvent, .singleEventOnDate {
     padding: 30px;
 }
 .featuredImg {
