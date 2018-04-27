@@ -60,14 +60,90 @@ function showSingleEvent(singleEvent){
             acfs.forEach(getSpecialCustomField);
             function getSpecialCustomField(cf){
                 // get event details
-                if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "description"){
-                    let cfName = cf;
-                    let p = document.createElement('p');
-                    p.className = "p-cf, " + cfName; // for styling
+                if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url"){ // don't display this in list view
                     let index = acfs.indexOf(cf);
-                    p.textContent = cfName + ": " + Object.values(singleEvent.acf)[index]; // get corresponding value of each key and assign the value to the p
-                    if (Object.values(singleEvent.acf)[index]) {
-                        clone.querySelector('.singleEvent').appendChild(p); // only append when has value
+                    let cfValue = Object.values(singleEvent.acf)[index];
+                    if(cf == "availability" && cfValue == "available"){
+                        // don't show any thing in this cased
+                    } else if(cf == "availability" && cfValue !== "available") {
+                        let p = document.createElement('p');
+                        p.classList.add('red');
+                        p.textContent = "Sold-Out";
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    } else if(cf == "price" && cfValue == "0"){
+                        let p = document.createElement('p');
+                        p.textContent = "FREE";
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    } else if(cf == "price" && cfValue !== "0") {
+                        let p = document.createElement('p');
+                        p.textContent = "Normal price: " + cfValue + " Kr.";
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
+                        let p = document.createElement('p');
+                        p.textContent = cfValue.replace('Forsalg', "Presale").replace('gebyr', 'fee');
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
+                        let p = document.createElement('p');
+                        p.textContent = "... extra ...";
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    } else if(cf == "buy_ticket"){
+                        if(Object.values(singleEvent.acf)[index].indexOf('http')>-1){
+                            let a = document.createElement('a');
+                            a.classList.add('blockA');
+                            a.target = "_blank";
+                            a.href = cfValue;
+                            a.textContent = "Buy ticket online";
+                            clone.querySelector('.singleEvent').appendChild(a);
+                        } else if(Object.values(singleEvent.acf)[index].indexOf('KØB')>-1) {
+                            let p = document.createElement('p');
+                            p.textContent = " Buy ticket at the entrance";
+                            clone.querySelector('.singleEvent').appendChild(p);
+                        } else {
+                            let p = document.createElement('p');
+                            p.textContent = cfValue;
+                            clone.querySelector('.singleEvent').appendChild(p);
+                        }
+                    } else if(cf == "language" && cfValue.length>1){
+                        let langSpan = document.createElement('span');
+                        langSpan.className = "lang";
+                        let langImg = document.createElement('img');
+                        langImg.setAttribute('src', " ");
+                        langImg.setAttribute('alt', "langIcon");
+                        clone.querySelector('.singleEvent').appendChild(langImg);
+                        for (let i=0; i<cfValue.length; i++){
+                            let span = document.createElement('span');
+                            span.textContent = cfValue[i] + "  ";
+                            clone.querySelector('.singleEvent').appendChild(langSpan);
+                            clone.querySelector('.singleEvent span.lang').appendChild(span);
+                        }
+                        clone.querySelector('.singleEvent span.lang').textContent = clone.querySelector('.singleEvent span.lang').textContent.replace(/\s+/, ' / ');
+                    } else if(cf == "language" && cfValue.length ==1 ){
+                        let langSpan = document.createElement('span');
+                        langSpan.className = "lang";
+                        let langImg = document.createElement('img');
+                        langImg.setAttribute('src', " ");
+                        langImg.setAttribute('alt', "langIcon");
+                        clone.querySelector('.singleEvent').appendChild(langImg);
+                        let span = document.createElement('span');
+                        span.textContent = cfValue;
+                        clone.querySelector('.singleEvent').appendChild(span);
+                    } else if(cf == "price_to_rent_the_game" || cf == "type_of_game"){
+                    } else if(cf == "description"){
+                        let p = document.createElement('p');
+                        p.textContent = "... read more ...";
+                        clone.querySelector('.singleEvent').appendChild(p);
+                    }
+
+                    else {
+                        let cfName = cf;
+                        let cfValue = Object.values(singleEvent.acf)[index];
+                        let p = document.createElement('p');
+                        p.className = "p-cf, " + cfName; // for styling
+                        p.innerHTML = "<p class='cfP'>" + cfName + ": </p><p>" + cfValue + "</p>";
+                        //p.textContent = cfName + ": " + cfValue; // get corresponding value of each key and assign the value to the p
+                        if (Object.values(singleEvent.acf)[index]) {
+                            clone.querySelector('.singleEvent').appendChild(p); // only append when has value
+                        }
                     }
                 }
             }
@@ -252,7 +328,7 @@ function clickOnSingleEvent(){
     function treatSingleEvent(singleEvent){
         singleEvent.addEventListener('click', displaySingleEvent);
         function displaySingleEvent(){
-            window.location.href = "https://onestepfurther.nu/semester2/huset-kbh/single-event.html?id=" + singleEvent.querySelector('span.hide').textContent;
+            window.location.href = "single-event.html?id=" + singleEvent.querySelector('span.hide').textContent;
         }
     }
 }

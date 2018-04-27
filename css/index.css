@@ -46,7 +46,7 @@ li {
 .day {
     border-bottom: 1px solid black;
 }
-.day.match {
+.day.match, .red {
     color: red;
 }
 main {
@@ -61,6 +61,10 @@ main {
 .featuredImg {
     width: 80%;
     height: auto;
+}
+.cfP {
+    text-transform: uppercase;
+    font-size: .7em;
 }
 .hide {
     display: none;
