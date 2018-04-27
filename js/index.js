@@ -52,6 +52,7 @@ function showSingleEvent(singleEvent){
             let clone = template.cloneNode(true);
             clone.querySelector('h2').innerHTML = singleEvent.acf["major_type"]; // use innerHTML cuz title include html entities and tags
             clone.querySelector('h1').innerHTML = singleEvent.title.rendered;
+            clone.querySelector('span.hide').textContent = singleEvent.id;
             if(singleEvent._embedded["wp:featuredmedia"]){
                 clone.querySelector('.featuredImg').setAttribute("src", singleEvent._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url)
             }
@@ -72,6 +73,7 @@ function showSingleEvent(singleEvent){
             }
             eventList.appendChild(clone);
         }
+    clickOnSingleEvent();
     }
 let checkBottom = setInterval(function(){
   if(bottomVisible() && lookingForData===false){
@@ -152,7 +154,7 @@ plusMonth.addEventListener('click', function(){
 })
 
 /////////// show events on calender ///////////
-// fetch all events and highlight dates with event
+// fetch all events and highlight the dates having at least one event
 // ??? how to exclude one category, ie. including all other categories, of posts in the url???
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
     .then(e=>e.json()).then(getEventDates);
@@ -181,7 +183,7 @@ function getEventDates(eventDates){
         }
     }
 }
-// click on date to see event(s) on that day
+// click on date in calendar to see event(s) on that day & event that is held over multiple days including the clicked day
 let allDays = document.querySelectorAll('.day');
 allDays.forEach(clickOnDay);
 function clickOnDay(d){
@@ -206,15 +208,13 @@ function clickOnDay(d){
                         updateEventList();
                     }
                 }
-
-
-
                 function updateEventList(){
                     // overwrite current eventlist with matched event(s)
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);
                     clone2.querySelector('h1').innerHTML = e.title.rendered;
                     clone2.querySelector('h2').innerHTML = e.acf["major_type"];
+                    clone2.querySelector('span.hide').textContent = e.id;
                     if(e._embedded["wp:featuredmedia"]){
                         clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url)
                     }
@@ -222,7 +222,7 @@ function clickOnDay(d){
                     acfs.forEach(getSpecialCustomField);
                     function getSpecialCustomField(cf){
                         // get event details
-                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "description"){
+                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description"){
                             let cfName = cf;
                             let p = document.createElement('p');
                             p.className = "p-cf, " + cfName; // for styling
@@ -236,18 +236,23 @@ function clickOnDay(d){
                     newEventList.appendChild(clone2);
                     eventList.innerHTML = newEventList.innerHTML;
                     lookingForData = true;
+                    clickOnSingleEvent();
                 }
-
-
-
-
-
-
-
-
-
-
             }
+        }
+    }
+}
+
+/////////// click on individual post ///////////
+function clickOnSingleEvent(){
+    let allSingleEvents = document.querySelectorAll('.singleEvent');
+    let allSingleEventsOnDate = document.querySelectorAll('.singleEventOnDate');
+    allSingleEvents.forEach(treatSingleEvent);
+    allSingleEventsOnDate.forEach(treatSingleEvent);
+    function treatSingleEvent(singleEvent){
+        singleEvent.addEventListener('click', displaySingleEvent);
+        function displaySingleEvent(){
+            window.location.href = "https://onestepfurther.nu/semester2/huset-kbh/single-event.html?id=" + singleEvent.querySelector('span.hide').textContent;
         }
     }
 }
