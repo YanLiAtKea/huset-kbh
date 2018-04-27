@@ -36,6 +36,9 @@ li {
 .day {
     border-bottom: 1px solid black;
 }
+.day.match {
+    color: red;
+}
 main {
     background: lightgrey;
 }

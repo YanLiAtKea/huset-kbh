@@ -20,14 +20,12 @@ function getMajorTypes(allCategories){
     })
 }
 
-/////////// load lists of all event ///////////
+/////////// load event list in pages///////////
 let template = document.querySelector(".singleEvent").content;
 let eventList = document.querySelector(".eventList");
 let lookingForData = false;
 let pageNr = 1;
 let urlParams = new URLSearchParams(window.location.search);
-
-/////////// load event list in pages///////////
 loadList();
 function loadList(){
     lookingForData = true;
@@ -101,13 +99,19 @@ function checkCurrentMonth(m){
     }
 }
 // generate days and put in each month
-for(let month = 0; month<12; month++){
+for(let month = 1; month<13; month++){
     for(let i=1; i<32; i++){
         let day = document.createElement("span");
         day.textContent = i;
         day.classList.add('day');
-        let actualMonth = month+1;
-        document.querySelector('.month:nth-of-type(' + actualMonth + ') .days').appendChild(day);
+        if(month<10 && i<10){ // in order to match event later, add "d" cuz class can't start with a number
+            day.classList.add('d0' + month + '0' + i);
+        } else if(month<10 && i>10){
+            day.classList.add('d0' + month + i);
+        }if(month>10 && i>10){
+            day.classList.add('d' + month + i);
+        }
+        document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(day);
     }
 }
 // hide days not exsiting on certain months
@@ -146,47 +150,21 @@ plusMonth.addEventListener('click', function(){
     }
 })
 
-/*
-let dates = document.querySelectorAll('.days span');
-let monthToCheck;
-let dayToCheck;
-dates.forEach(checkEventByDate);
-function checkEventByDate(d){
-    d.addEventListener('click', clickOnDate);
-    function clickOnDate(){
-        if(document.querySelector('.month span:nth-of-type(2)').textContent<10){
-            monthToCheck = "0" + document.querySelector('.month span:nth-of-type(2)').textContent;
-        } else {
-            monthToCheck = document.querySelector('.month span:nth-of-type(2)').textContent;
+/////////// show events on calender ///////////
+// fetch all events
+// ??? how to exclude one category of post?
+fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
+    .then(e=>e.json()).then(getEventDates);
+function getEventDates(eventDates){
+    let i=0;
+    eventDates.forEach(matchDate);
+    function matchDate(d){
+        let eventStartDate;
+        if(d.acf["date-start"]){ // exclude board games, which don't have event start time
+            eventStartDate = d.acf["date-start"].slice(4,8); // not working on year for this project, so only need the last digits in form of mmdd
+            document.querySelector('.d'+ eventStartDate).classList.add('match');
+            i++;
         }
-        if(d.textContent < 10){
-            dayToCheck = "0" + d.textContent;
-        } else {
-            dayToCheck = d.textContent;
-        }
-        let dateToCheck = "2018" + monthToCheck + dayToCheck;
-        fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
-            .then(e=>e.json())
-            .then(gotAllEvents);
-        function gotAllEvents(events){
-            events.forEach(matchDate);
-            function matchDate(e){
-                if(e.acf["date-start"]){
-                let startDate = e.acf["date-start"];
-//                let startMonth = startDate[4]+startDate[5];
-//                let startDay = startDate[6]+startDate[7];
-//                if(startDay === dateToCheck && startMonth === monthToCheck){
-                if(startDate === dateToCheck){
-                    let matchLink = "http://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&acf['date-start']=" + startDate;
-                    fetch(matchLink).then(e=>e.json()).then(listMatches);
-                    function listMatches(matches){
-                            console.log(matches);
-                    }
-                }
-
-                }
-            }
-        }
+        console.log(i, eventStartDate);
     }
 }
-*/
