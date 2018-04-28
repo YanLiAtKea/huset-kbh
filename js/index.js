@@ -254,6 +254,33 @@ plusMonth.addEventListener('click', function(){
     }
 })
 
+// click to expand calenderfilter by date
+
+document.querySelector('.by-date').addEventListener('click', showCalender);
+function showCalender(){
+    let datePicked = false; // need this to handle the collapse calender result. If no date with event is clicked, collapse calender won't change the underlying page content. If a date with event is clicked, the underlying page will display events on that day, the type filter should be hiden in this case, otherwise user might think they can further filter the results by type
+    document.querySelector('.date-filter').classList.remove('hide');
+    document.querySelector('.type-filter').classList.add('hide');
+    document.querySelector('aside').classList.add('expand');
+}
+
+
+// click to collapse calender
+document.querySelector('.close-calender').addEventListener('click', collapseCalender);
+function collapseCalender(){
+    document.querySelector('.date-filter').classList.add('hide');
+    document.querySelector('aside').classList.remove('expand');
+    if (datePicked){
+        document.querySelector('.chosen').classList.remove('chosen');
+        document.querySelector('.by-type').addEventListener('click', showCategoryList);
+        function showCategoryList(){
+            document.querySelector('.type-filter').classList.remove('hide');
+        }
+    } else {
+        document.querySelector('.type-filter').classList.remove('hide');
+    }
+}
+
 /////////// show events on calender ///////////
 // fetch all events and highlight the dates having at least one event
 // ??? how to exclude one category, ie. including all other categories, of posts in the url???
@@ -310,6 +337,7 @@ function clickOnDay(d){
                     }
                 }
                 function updateEventList(){
+                    datePicked = true; // usded for different treatments regarding what to display after calender is collapsed
                     // overwrite current eventlist with matched event(s)
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);

@@ -22,15 +22,21 @@ body {
     font-family: text-medium;
 }
 aside {
+    background-color: white;;
     border-right: 1px solid black;
     position: fixed;
     left: 0;
     top: 0;
     width: 17%;
     padding: 10px;
-    height: 79vh;
+    height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    transition: all .1s ease-out;
+}
+aside.expand {
+    width: 69%;
+    z-index: 1;
 }
 aside>img {
     width: 50px;
@@ -48,6 +54,7 @@ aside>p {
 }
 main {
     grid-column-start: 2;
+    overflow: hidden;
 }
 .logo-map {
     position: fixed;
@@ -66,13 +73,20 @@ main {
 }
 p.button {
     display: inline-block;
-    margin: 1em 2em;
+    font-size: 1.3em;
+}
+p.plusMonth {
+    position: absolute;
+    right: 0;
 }
 li {
     margin-bottom: .5em;
 }
-.month p span {
-    margin: 1em;
+.month p span:nth-of-type(3) {
+    width: 30px;
+    margin-left: calc(30vw - 15px);
+    font-family: title-bold;
+    font-size: 1.3em;
 }
 .month p span:nth-of-type(2){
     display: none;
@@ -89,12 +103,13 @@ li {
     grid-column: 1/-1;
 }
 .day {
-    border-bottom: 1px solid black;
+    margin-top: .5em;
 }
 .day.match, .red {
     color: red;
 }
 .eventList {
+    width: 100%;
     padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
 }
 .eventList h1 {
@@ -106,6 +121,7 @@ li {
     display: inline-block;
 }
 .singleEvent, .singleEventOnDate {
+    width: 77vw;
     padding: 30px;
 }
 .featuredImg {
