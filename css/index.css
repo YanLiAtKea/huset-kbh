@@ -4,20 +4,50 @@
     box-sizing: border-box;
     position: relative;
 }
+@font-face {
+    font-family: title-bold;
+    src: url(/font/AvenirNext-DemiBold.ttf);
+}
+@font-face {
+    font-family: text-medium;
+    src: url(/font/AvenirNext-Medium.ttf);
+}
+
 a {
     display: block;
 }
 body {
     display: grid;
     grid-template-columns: 2fr 7fr;
-
+    font-family: text-medium;
 }
 aside {
     border-right: 1px solid black;
-    overflow: scroll;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 17%;
 }
 aside p:not(.button) {
     margin: 3em 0 1em;
+}
+main {
+    grid-column-start: 2;
+}
+.logo-map {
+    position: fixed;
+    bottom: -7px;
+    width: 100%;
+}
+.logo-map img {
+    width: 100%;
+    bottom: -30px;
+}
+.logo-map img.map {
+    position: fixed;
+    bottom: -20px;
+    right: -7%;
+    width: 53%;
 }
 p.button {
     display: inline-block;
@@ -49,8 +79,13 @@ li {
 .day.match, .red {
     color: red;
 }
-main {
-    background: lightgrey;
+.eventList {
+    padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
+}
+.eventList h1 {
+    font-size: 1.3em;
+    font-family: title-bold;
+    overflow: hidden;
 }
 .eventList h2, .eventList img:not(.featuredImg) {
     display: inline-block;
