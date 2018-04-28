@@ -8,21 +8,27 @@ function getMajorTypes(allCategories){
     allCategories.forEach(category => {
         let li = document.createElement("li");
         let a = document.createElement("a");
+        let icon = document.createElement('img');
+        let p = document.createElement('p');
+        p.classList.add('hide');
         a.classList.add('major-category');
         if(category.parent === 12 || category.id === 33){ // include general events and board game events, not the board game posts
             if (category.name.indexOf("event")>-1){ // remove unnecessary text in the WP (in the WP these texts are useful as they help avoid condusion in similar categories)
-                a.textContent = category.name.slice(0, -5);
+                p.textContent = category.name.slice(0, -5);
             } else {
-                a.textContent = category.name;
+                p.textContent = category.name;
             }
             a.href="index.html?category="+category.id;
-            cateArray.push(category.id);
+            cateArray.push(category.id); // so later can match category id in url, which shows which type is clicked, with which li is clicked. read few lines below
+            icon.classList.add('type-icon');
+            icon.src = "img/" + category.id + ".png";
+            a.appendChild(p);
+            a.appendChild(icon);
             li.appendChild(a);
             ul.appendChild(li);
         }
     })
     // when one type is chosen, highlight that type and show sub-categories or tags
-
     // can't use click a type as eventlistener and change the "chosen" one's class, because page will be reloaded after each click, the selector will be no longer available
     if(window.location.href.indexOf('?category')>-1){
         document.querySelector('.all-types a').classList.remove('chosen');
@@ -255,10 +261,11 @@ plusMonth.addEventListener('click', function(){
 })
 
 // click to expand calenderfilter by date
+let datePicked; // need this to handle the collapse calender result. If no date with event is clicked, collapse calender won't change the underlying page content. If a date with event is clicked, the underlying page will display events on that day, the type filter should be hiden in this case, otherwise user might think they can further filter the results by type
 
 document.querySelector('.by-date').addEventListener('click', showCalender);
 function showCalender(){
-    let datePicked = false; // need this to handle the collapse calender result. If no date with event is clicked, collapse calender won't change the underlying page content. If a date with event is clicked, the underlying page will display events on that day, the type filter should be hiden in this case, otherwise user might think they can further filter the results by type
+    datePicked = false;
     document.querySelector('.date-filter').classList.remove('hide');
     document.querySelector('.type-filter').classList.add('hide');
     document.querySelector('aside').classList.add('expand');
@@ -270,13 +277,15 @@ document.querySelector('.close-calender').addEventListener('click', collapseCale
 function collapseCalender(){
     document.querySelector('.date-filter').classList.add('hide');
     document.querySelector('aside').classList.remove('expand');
-    if (datePicked){
+    if (datePicked == true){
+        console.log(' date picked');
         document.querySelector('.chosen').classList.remove('chosen');
         document.querySelector('.by-type').addEventListener('click', showCategoryList);
         function showCategoryList(){
             document.querySelector('.type-filter').classList.remove('hide');
         }
     } else {
+        console.log('no date picked');
         document.querySelector('.type-filter').classList.remove('hide');
     }
 }
@@ -311,6 +320,7 @@ function getEventDates(eventDates){
         }
     }
 }
+
 // click on date in calendar to see event(s) on that day & event that is held over multiple days including the clicked day
 let allDays = document.querySelectorAll('.day');
 allDays.forEach(clickOnDay);

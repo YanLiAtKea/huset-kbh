@@ -39,7 +39,7 @@ aside.expand {
     z-index: 1;
 }
 aside>img {
-    width: 50px;
+    width: 40px;
 }
 aside>p {
     margin: 1em 0 1em;
@@ -51,6 +51,9 @@ aside>p {
 }
 .type-filter li a.chosen {
     text-decoration: underline;
+}
+.type-icon {
+    width: 30px;
 }
 main {
     grid-column-start: 2;
