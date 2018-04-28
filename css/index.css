@@ -6,11 +6,11 @@
 }
 @font-face {
     font-family: title-bold;
-    src: url(/font/AvenirNext-DemiBold.ttf);
+    src: url(../font/avenir-next-demi-bold.ttf);
 }
 @font-face {
     font-family: text-medium;
-    src: url(/font/AvenirNext-Medium.ttf);
+    src: url(../font/avenir-next-medium.ttf);
 }
 
 a {

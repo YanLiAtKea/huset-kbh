@@ -128,7 +128,7 @@ function showSingleEvent(singleEvent){
                     let langSpan = document.createElement('span');
                     langSpan.className = "lang";
                     let langImg = document.createElement('img');
-                    langImg.setAttribute('src', "/img/lang-icon_50.png");
+                    langImg.setAttribute('src', "img/lang-icon_50.png");
                     langImg.setAttribute('alt', "langIcon");
                     langImg.classList.add('lang-icon');
 
@@ -144,7 +144,7 @@ function showSingleEvent(singleEvent){
                     let langSpan = document.createElement('span');
                     langSpan.className = "lang";
                     let langImg = document.createElement('img');
-                    langImg.setAttribute('src', "/img/lang-icon_50.png");
+                    langImg.setAttribute('src', "img/lang-icon_50.png");
                     langImg.setAttribute('alt', "langIcon");
                     langImg.classList.add('lang-icon');
                     clone.querySelector('.singleEvent').appendChild(langImg);
