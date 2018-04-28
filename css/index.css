@@ -22,12 +22,11 @@ body {
     font-family: text-medium;
 }
 aside {
-    background-color: white;;
-    border-right: 1px solid black;
+    background-color: white;
     position: fixed;
     left: 0;
     top: 0;
-    width: 17%;
+    width: 20%;
     padding: 10px;
     height: 80vh;
     overflow-y: scroll;
@@ -53,11 +52,20 @@ aside>p {
     text-decoration: underline;
 }
 .type-icon {
-    width: 30px;
+    width: 50px;
+}
+.major-category p, .all-types a {
+    font-size: .6em;
+    line-height: 0;
 }
 main {
     grid-column-start: 2;
     overflow: hidden;
+}
+.triangle {
+    width: 70%;
+    position: fixed;
+    top: -73px;
 }
 .logo-map {
     position: fixed;
@@ -77,13 +85,14 @@ main {
 p.button {
     display: inline-block;
     font-size: 1.3em;
+    top: 1.3em;
+    z-index: 3;
 }
 p.plusMonth {
-    position: absolute;
-    right: 0;
+    right: -53vw;
 }
 li {
-    margin-bottom: .5em;
+    margin-bottom: .2em;
 }
 .month p span:nth-of-type(3) {
     width: 30px;
@@ -107,9 +116,13 @@ li {
 }
 .day {
     margin-top: .5em;
+    color: #bbb;
 }
-.day.match, .red {
-    color: red;
+.day.match {
+    color: #15174a;
+}
+.red {
+    color: #c63538;
 }
 .eventList {
     width: 100%;
@@ -126,6 +139,13 @@ li {
 .singleEvent, .singleEventOnDate {
     width: 77vw;
     padding: 30px;
+}
+.singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
+    background: white;
+}
+.event-type-icon {
+    float: right;
+    width: 37px;
 }
 .featuredImg {
     width: 90%;
