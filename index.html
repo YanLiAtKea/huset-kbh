@@ -8,12 +8,13 @@
 </head>
 <body>
     <aside>
-        <p>FILTER by event type:</p>
+       <img class="corner-icon" src="img/cornor-icon_200.png" alt="cornor icon">
+        <p>pick a TYPE</p>
         <ul class="type-filter">
-            <li><a href="index.html">ALL TYPES of Events</a></li>
+            <li class="all-types"><a class="chosen" href="index.html">any type</a></li>
         </ul>
-        <P>Filter by event date</P>
-        <div class="date-filter">
+        <p class="clear-date">pick a DATE</p>
+        <div class="date-filter hide">
             <a href="index.html">CLEAR date</a>
             <p class="minusMonth button">prev</p>
             <p class="plusMonth button">next</p>
@@ -71,7 +72,7 @@
        <div class="eventList"></div>
        <template class="singleEvent">
            <div class="singleEvent">
-               <h2></h2><img src="" alt="event type icon">
+               <h2></h2><img class="event-type-icon" src="" alt="event type icon">
                <h1></h1>
                <span class="hide"></span>
                <img class="featuredImg" src="">
