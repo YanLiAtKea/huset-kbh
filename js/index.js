@@ -10,7 +10,7 @@ function getMajorTypes(allCategories){
         let a = document.createElement("a");
         let icon = document.createElement('img');
         let p = document.createElement('p');
-        p.classList.add('hide');
+        icon.classList.add('hide');
         a.classList.add('major-category');
         if(category.parent === 12 || category.id === 33){ // include general events and board game events, not the board game posts
             if (category.name.indexOf("event")>-1){ // remove unnecessary text in the WP (in the WP these texts are useful as they help avoid condusion in similar categories)
@@ -33,10 +33,12 @@ function getMajorTypes(allCategories){
     if(window.location.href.indexOf('?category')>-1){
         document.querySelector('.all-types a').classList.remove('chosen');
         let allTypes = document.querySelectorAll('.major-category');
+        let allTypeIcons = document.querySelectorAll('.type-icon');
         let cateId = window.location.href.split('=')[1];
         for(let i=0; i<cateArray.length; i++){
             if(cateId == cateArray[i]){
                 allTypes[i].classList.add('chosen');
+                allTypeIcons[i].classList.remove('hide');
             }
         }
     }
@@ -75,6 +77,7 @@ function showSingleEvent(singleEvent){
         let clone = template.cloneNode(true);
         if (window.location.href.indexOf('?category')<0){ // only need to show event type (name and icon) in the list that include multiple types, after user has filtered list using type, no need to show category at each each post
             clone.querySelector('h2').innerHTML = singleEvent.acf["major_type"]; // use innerHTML cuz title include html entities and tags
+            clone.querySelector('.event-type-icon').setAttribute('src', "img/" + singleEvent.categories[1] +".png");
         } else {
             clone.querySelector('.event-type-icon').remove();
         }
@@ -103,7 +106,8 @@ function showSingleEvent(singleEvent){
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue !== "0") {
                     let p = document.createElement('p');
-                    p.textContent = "Normal price: " + cfValue + " Kr.";
+                    p.classList.add('normal-price');
+                    p.textContent = "Price: " + cfValue + " Kr.";
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
                     let p = document.createElement('p');
@@ -278,14 +282,12 @@ function collapseCalender(){
     document.querySelector('.date-filter').classList.add('hide');
     document.querySelector('aside').classList.remove('expand');
     if (datePicked == true){
-        console.log(' date picked');
         document.querySelector('.chosen').classList.remove('chosen');
         document.querySelector('.by-type').addEventListener('click', showCategoryList);
         function showCategoryList(){
             document.querySelector('.type-filter').classList.remove('hide');
         }
     } else {
-        console.log('no date picked');
         document.querySelector('.type-filter').classList.remove('hide');
     }
 }
