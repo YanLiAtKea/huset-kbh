@@ -51,6 +51,7 @@ aside {
     transition: all .1s ease-out;
 }
 aside.expand {
+    border-bottom: 1px solid var(--purple);
     width: 69%;
     z-index: 1;
 }
@@ -72,10 +73,10 @@ aside>p {
 /*    text-decoration: underline;*/
     color: var(--light-green);
     font-size: 1.1em;
-    line-height: .7em;
+    line-height: 1em;
 }
 a.chosen p {
-    transform: rotate(-90deg) translateY(19px);
+    transform: rotate(-90deg) translateY(13px);
 }
 .type-icon {
     width: 40px;
@@ -109,6 +110,10 @@ main {
     bottom: -10px;
     right: -7%;
     width: 53%;
+}
+.date-filter {
+    position: absolute; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
+    bottom: 67px;
 }
 .close-calender {
     font-size: .7em;
@@ -162,17 +167,24 @@ p.plusMonth {
     font-size: .7em;
     margin-top: 1em;
 }
-.red {
-    color: #c63538;
+.singleEvent .red {
+    color: var(--red);
+    font-size: .67em;
+}
+.read-more {
+    padding-bottom: 1em;
 }
 .eventList {
     width: 100%;
     padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
 }
 .eventList h1 {
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-family: title-bold;
     overflow: hidden;
+}
+.eventList p {
+    font-size: .83em;
 }
 .eventList h2, .eventList img:not(.featuredImg) {
     display: inline-block;
@@ -181,7 +193,7 @@ p.plusMonth {
 }
 .singleEvent, .singleEventOnDate {
     width: 77vw;
-    padding: 30px;
+    padding: 30px 10px 30px 25px;
 }
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
     background: white;
@@ -191,16 +203,19 @@ p.plusMonth {
     width: 37px;
 }
 .featuredImg {
-    width: 90%;
+    width: 93%;
     height: auto;
 }
 .cfP {
     text-transform: uppercase;
-    font-size: .7em;
+    padding-top: 1em; /* use padding instead of margin to eliminate the gaps between these elements, which will "cut through" the green triangel way too many times */
 }
 .lang-icon {
     height: .8em;
-    margin-right: .2em;
+    margin: 1em .2em 0 0;
+}
+.blockA {
+    background: white;
 }
 .hide {
     display: none;

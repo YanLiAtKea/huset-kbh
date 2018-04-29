@@ -96,7 +96,7 @@ function showSingleEvent(singleEvent){
                 } else if(cf == "availability" && cfValue !== "available") {
                     let p = document.createElement('p');
                     p.classList.add('red');
-                    p.textContent = "Sold-Out";
+                    p.textContent = "!!! Currently sold-Out";
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue == "0"){
                     let p = document.createElement('p');
@@ -113,7 +113,8 @@ function showSingleEvent(singleEvent){
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
                     let p = document.createElement('p');
-                    p.textContent = "... extra ...";
+                    p.className = "read-more";
+                    p.textContent = "... extra info ...";
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "buy_ticket"){
                     if(Object.values(singleEvent.acf)[index].indexOf('http')>-1){
@@ -162,6 +163,7 @@ function showSingleEvent(singleEvent){
                 } else if(cf == "price_to_rent_the_game" || cf == "type_of_game"){
                 } else if(cf == "description"){
                     let p = document.createElement('p');
+                    p.className= 'read-more';
                     p.textContent = "... read more ...";
                     clone.querySelector('.singleEvent').appendChild(p);
                 }
@@ -366,7 +368,8 @@ function clickOnDay(d){
                     clone2.querySelector('h2').innerHTML = e.acf["major_type"];
                     clone2.querySelector('span.hide').textContent = e.id;
                     if(e._embedded["wp:featuredmedia"]){
-                        clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url)
+                        clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url);
+                        clone2.querySelector('.featuredImg').setAttribute("alt", "featured image of event"); // not working???
                     }
                     let acfs = Object.keys(e.acf);// get the list of all custom fields keys
                     acfs.forEach(getSpecialCustomField);
