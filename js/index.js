@@ -166,14 +166,16 @@ function showSingleEvent(singleEvent){
                     p.className= 'read-more';
                     p.textContent = "... read more ...";
                     clone.querySelector('.singleEvent').appendChild(p);
-                }
-
-                else {
-                    let cfName = cf;
+                } else if(cf == "duration" && cfValue){
+                    let p = document.createElement('p');
+                    p.className = "p-cf, " + cf; // for styling
+                    p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + " min.</p>";
+                    clone.querySelector('.singleEvent').appendChild(p);
+                } else {
                     let cfValue = Object.values(singleEvent.acf)[index];
                     let p = document.createElement('p');
-                    p.className = "p-cf, " + cfName; // for styling
-                    p.innerHTML = "<p class='cfP'>" + cfName + ": </p><p>" + cfValue + "</p>";
+                    p.className = "p-cf, " + cf; // for styling
+                    p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + "</p>";
                     //p.textContent = cfName + ": " + cfValue; // get corresponding value of each key and assign the value to the p
                     if (Object.values(singleEvent.acf)[index]) {
                         clone.querySelector('.singleEvent').appendChild(p); // only append when has value
@@ -481,12 +483,22 @@ function clickOnDay(d){
                                 p.className= 'read-more';
                                 p.textContent = "... read more ...";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
-                            } else {
-                                let cfName = cf;
+                            } else if(cf == "duration" && cfValue){
                                 let p = document.createElement('p');
-                                p.className = "p-cf, " + cfName; // for styling
+                                p.className = "cfP, " + cf; // for styling
+                                p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + " min.</p>";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if (cf == "location") {
+                                let p = document.createElement('p');
+                                p.className = "cfP " + cf; // for styling
+                                p.innerHTML = "<p class='cfP'><img class='location' src='img/location.png' alt='location icon'>" + cfValue + "</p>";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            }
+                            else {
+                                let p = document.createElement('p');
+                                p.className = "cfP " + cf; // for styling
                                 let index = acfs.indexOf(cf);
-                                p.textContent = cfName + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
+                                p.textContent = cf + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
                                 if (Object.values(e.acf)[index]) {
                                     clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
                                 }

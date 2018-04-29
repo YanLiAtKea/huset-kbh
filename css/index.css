@@ -31,7 +31,7 @@ ul {
     list-style-type: none;
 }
 li {
-    margin-top: 1.1em;
+    margin-top: .9em;
 }
 a {
     display: block;
@@ -53,7 +53,8 @@ aside {
     height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
-    transition: all .1s ease-out;
+    transition: all 3s ease-out;
+    transition: height .0001s;
 }
 aside.expand {
     background: var(--black);
@@ -67,8 +68,9 @@ aside.expand {
     width: 50px;
 }
 .corner-icon-pink {
-    width: 170px;
-    left: -10px;
+    width: 150px;
+    left: -20px;
+    top: -10px;
 }
 aside>p {
     margin: 1.5em 0 1em;
@@ -124,7 +126,7 @@ main {
 }
 .date-filter {
     width: 90%;
-    margin: 55px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
+    margin: 35px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
 }
 .close-calender {
     font-size: .7em;
@@ -240,6 +242,14 @@ p.plusMonth {
 }
 .blockA {
     background: white;
+}
+.location, .lang-icon {
+    width: 13px;
+    height: auto;
+    margin-right: 5px;
+}
+span.lang {
+    font-size: .8em;
 }
 .extra-margin {
     margin: 1em 0;
