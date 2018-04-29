@@ -44,8 +44,6 @@ function getMajorTypes(allCategories){
     }
 }
 
-
-
 /////////// load event list in pages///////////
 let template = document.querySelector("template.singleEvent").content;
 let eventList = document.querySelector(".eventList");
@@ -77,7 +75,7 @@ function showSingleEvent(singleEvent){
         let clone = template.cloneNode(true);
         if (window.location.href.indexOf('?category')<0){ // only need to show event type (name and icon) in the list that include multiple types, after user has filtered list using type, no need to show category at each each post
             clone.querySelector('h2').innerHTML = singleEvent.acf["major_type"]; // use innerHTML cuz title include html entities and tags
-            clone.querySelector('.event-type-icon').setAttribute('src', "img/" + singleEvent.categories[1] +".png");
+            clone.querySelector('.event-type-icon').setAttribute('src', "img/" + singleEvent.categories[1] +"-black.png");
         } else {
             clone.querySelector('.event-type-icon').remove();
         }
@@ -185,6 +183,7 @@ function showSingleEvent(singleEvent){
     }
 clickOnSingleEvent();
 }
+
 /////////// load next page of posts when reaching the bottom of the page
 let checkBottom = setInterval(function(){
   if(bottomVisible() && lookingForData===false){
@@ -227,6 +226,11 @@ for(let month = 1; month<13; month++){
         }
         document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(day);
     }
+        let hint = document.createElement('p');
+        hint.className = "hint";
+        hint.textContent = "* dates in this color has event(s) registered already";
+        document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(hint);
+
 }
 // hide days not exsiting on certain months
 checkCorrectDaysNumber();
@@ -264,7 +268,7 @@ plusMonth.addEventListener('click', function(){
     }
 })
 
-// click to expand calenderfilter by date
+// click to expand calender filter
 let datePicked; // need this to handle the collapse calender result. If no date with event is clicked, collapse calender won't change the underlying page content. If a date with event is clicked, the underlying page will display events on that day, the type filter should be hiden in this case, otherwise user might think they can further filter the results by type
 
 document.querySelector('.by-date').addEventListener('click', showCalender);
@@ -272,6 +276,8 @@ function showCalender(){
     datePicked = false;
     document.querySelector('.date-filter').classList.remove('hide');
     document.querySelector('.type-filter').classList.add('hide');
+    document.querySelector('.by-type').classList.add('hide');
+    document.querySelector('.or').classList.add('hide');
     document.querySelector('aside').classList.add('expand');
 }
 
@@ -279,6 +285,9 @@ function showCalender(){
 // click to collapse calender
 document.querySelector('.close-calender').addEventListener('click', collapseCalender);
 function collapseCalender(){
+    document.querySelector('.by-type').classList.remove('hide');
+    document.querySelector('.or').classList.remove('hide');
+
     document.querySelector('.date-filter').classList.add('hide');
     document.querySelector('aside').classList.remove('expand');
     if (datePicked == true){

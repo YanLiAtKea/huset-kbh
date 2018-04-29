@@ -12,9 +12,26 @@
     font-family: text-medium;
     src: url(../font/avenir-next-medium.ttf);
 }
-
+:root {
+    --blue: #d4edf5;
+    --red: #c63538;
+    --purple: #15174a;
+    --pink: #f8dce3;
+    --white: #fffffe;
+    --grey: #8a8b8a;
+    --black: #1b1919;
+    --dark-green: #29562d;
+    --light-green: #d8e9cb;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    margin-top: 1.1em;
+}
 a {
     display: block;
+    color: var(--black);
 }
 body {
     display: grid;
@@ -22,7 +39,7 @@ body {
     font-family: text-medium;
 }
 aside {
-    background-color: white;
+    background-color: rgba(255,255,255,.97);
     position: fixed;
     left: 0;
     top: 0;
@@ -38,10 +55,10 @@ aside.expand {
     z-index: 1;
 }
 aside>img {
-    width: 40px;
+    width: 50px;
 }
 aside>p {
-    margin: 1em 0 1em;
+    margin: 1.5em 0 1em;
     font-size: .7em;
     color: #8a8b8a;
 }
@@ -49,23 +66,34 @@ aside>p {
     text-decoration: none;
 }
 .type-filter li a.chosen {
-    text-decoration: underline;
+    margin-top: 1.3em;
+}
+.type-filter li a.chosen, a.chosen p {
+/*    text-decoration: underline;*/
+    color: var(--light-green);
+    font-size: 1.1em;
+    line-height: .7em;
+}
+a.chosen p {
+    transform: rotate(-90deg) translateY(19px);
 }
 .type-icon {
-    width: 50px;
+    width: 40px;
+    left: 23px;
+    top: 7px;
 }
 .major-category p, .all-types a {
     font-size: .6em;
-    line-height: 0;
+    line-height: 1em;
 }
 main {
     grid-column-start: 2;
     overflow: hidden;
 }
 .triangle {
-    width: 70%;
+    width: 74%;
     position: fixed;
-    top: -73px;
+    top: -83px;
 }
 .logo-map {
     position: fixed;
@@ -82,23 +110,30 @@ main {
     right: -7%;
     width: 53%;
 }
+.close-calender {
+    font-size: .7em;
+    color: #bbb
+}
+.close-calender span {
+    font-size: 1.3em;
+    color: var(--purple);
+}
 p.button {
     display: inline-block;
     font-size: 1.3em;
     top: 1.3em;
     z-index: 3;
+    color: var(--purple);
 }
 p.plusMonth {
     right: -53vw;
 }
-li {
-    margin-bottom: .2em;
-}
 .month p span:nth-of-type(3) {
     width: 30px;
-    margin-left: calc(30vw - 15px);
+    margin-left: calc(31vw - 15px);
     font-family: title-bold;
     font-size: 1.3em;
+    color: var(--purple);
 }
 .month p span:nth-of-type(2){
     display: none;
@@ -121,6 +156,12 @@ li {
 .day.match {
     color: #15174a;
 }
+.hint {
+    grid-column: 1/-1;
+    color: var(--purple);
+    font-size: .7em;
+    margin-top: 1em;
+}
 .red {
     color: #c63538;
 }
@@ -135,6 +176,8 @@ li {
 }
 .eventList h2, .eventList img:not(.featuredImg) {
     display: inline-block;
+    font-family: text-medium;
+    font-size: 13px;
 }
 .singleEvent, .singleEventOnDate {
     width: 77vw;
