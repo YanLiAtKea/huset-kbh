@@ -230,7 +230,7 @@ for(let month = 1; month<13; month++){
     }
         let hint = document.createElement('p');
         hint.className = "hint";
-        hint.textContent = "* dates in this color has event(s) registered already";
+        hint.textContent = "* date in highlighted color has event(s) registered already";
         document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(hint);
 
 }
@@ -279,8 +279,11 @@ function showCalender(){
     document.querySelector('.date-filter').classList.remove('hide');
     document.querySelector('.type-filter').classList.add('hide');
     document.querySelector('.by-type').classList.add('hide');
+    document.querySelector('.by-date').classList.add('hide');
     document.querySelector('.or').classList.add('hide');
     document.querySelector('aside').classList.add('expand');
+    document.querySelector('.corner-icon').classList.add('hide');
+    document.querySelector('.corner-icon-pink').classList.remove('hide');
 }
 
 
@@ -289,11 +292,16 @@ document.querySelector('.close-calender').addEventListener('click', collapseCale
 function collapseCalender(){
     document.querySelector('.by-type').classList.remove('hide');
     document.querySelector('.or').classList.remove('hide');
-
+    document.querySelector('.corner-icon').classList.remove('hide');
+    document.querySelector('.corner-icon-pink').classList.add('hide');
     document.querySelector('.date-filter').classList.add('hide');
+    document.querySelector('.by-date').classList.remove('hide');
     document.querySelector('aside').classList.remove('expand');
     if (datePicked == true){
-        document.querySelector('.chosen').classList.remove('chosen');
+        if (document.querySelector('.chosen')){
+            document.querySelector('.chosen').classList.remove('chosen');
+            document.querySelectorAll('.type-icon').forEach(function(ti){ti.classList.add('hide')});
+        }
         document.querySelector('.by-type').addEventListener('click', showCategoryList);
         function showCategoryList(){
             document.querySelector('.type-filter').classList.remove('hide');
@@ -338,8 +346,20 @@ function getEventDates(eventDates){
 let allDays = document.querySelectorAll('.day');
 allDays.forEach(clickOnDay);
 function clickOnDay(d){
+
     d.addEventListener('click', filterByDate);
     function filterByDate(){
+        if(d.className.indexOf('match')<0){ // check if it's a day with match. if not give hint
+            //??? can't set var allDays above to select all .match, which would mean only checking on days with match. don't know why it doesn't work, classes are in, should work....
+            document.querySelector('.month:not(.hide) .hint').textContent = " No event on that day";
+            setTimeout(function(){document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";
+}, 1300);
+        } else {
+            document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";     // whenever a day is clicked, reset hint to this
+            document.querySelectorAll('.singleEvent').forEach(function(e){e.classList.add('match-day-clicked')});
+            document.querySelectorAll('.singleEventOnDate').forEach(function(e){e.classList.add('match-day-clicked')});
+        }
+        // fint matching event(s)
         let clickedDate = d.className.slice(5, 9); // get the date in format mmdd
         fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
             .then(e=>e.json()).then(lookForDate);
@@ -364,8 +384,16 @@ function clickOnDay(d){
                     // overwrite current eventlist with matched event(s)
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);
+                    clone2.querySelector('h2').innerHTML = e.acf["major_type"]; // use innerHTML cuz title include html entities and tags
+                    if(e.categories.length>1){
+                        clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[1] +"-black.png");
+                    } else {
+                        clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
+                                            console.log(e.categories[0], e.categories);
+
+                    }
                     clone2.querySelector('h1').innerHTML = e.title.rendered;
-                    clone2.querySelector('h2').innerHTML = e.acf["major_type"];
+                    clone2.querySelector('h1').classList.add('extra-margin'); // cuz list is not so long and crowded as in the list of all events
                     clone2.querySelector('span.hide').textContent = e.id;
                     if(e._embedded["wp:featuredmedia"]){
                         clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url);
@@ -374,15 +402,94 @@ function clickOnDay(d){
                     let acfs = Object.keys(e.acf);// get the list of all custom fields keys
                     acfs.forEach(getSpecialCustomField);
                     function getSpecialCustomField(cf){
+                        let index = acfs.indexOf(cf);
+                        let cfValue = Object.values(e.acf)[index];
                         // get event details
-                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description"){
-                            let cfName = cf;
-                            let p = document.createElement('p');
-                            p.className = "p-cf, " + cfName; // for styling
-                            let index = acfs.indexOf(cf);
-                            p.textContent = cfName + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
-                            if (Object.values(e.acf)[index]) {
-                                clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
+                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description"){ // don't deal with these for hand-in
+                            if(cf == "availability" && cfValue == "available"){
+                            // don't show any thing in this cased
+                            } else if(cf == "availability" && cfValue !== "available") {
+                                let p = document.createElement('p');
+                                p.classList.add('red');
+                                p.textContent = "!!! Currently sold-Out";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "price" && cfValue == "0"){
+                                let p = document.createElement('p');
+                                p.textContent = "FREE";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "price" && cfValue !== "0") {
+                                let p = document.createElement('p');
+                                p.classList.add('normal-price');
+                                p.textContent = "Price: " + cfValue + " Kr.";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
+                                let p = document.createElement('p');
+                                p.textContent = cfValue.replace('Forsalg', "Presale").replace('gebyr', 'fee');
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
+                                let p = document.createElement('p');
+                                p.className = "read-more";
+                                p.textContent = "... extra info ...";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "buy_ticket"){
+                                if(cfValue.indexOf('http')>-1){
+                                    let a = document.createElement('a');
+                                    a.classList.add('blockA');
+                                    a.target = "_blank";
+                                    a.href = cfValue;
+                                    a.textContent = "Buy ticket online";
+                                    clone2.querySelector('.singleEventOnDate').appendChild(a);
+                                } else if(cfValue.indexOf('KØB')>-1) {
+                                    let p = document.createElement('p');
+                                    p.textContent = " Buy ticket at the entrance";
+                                    clone2.querySelector('.singleEventOnDate').appendChild(p);
+                                } else {
+                                    let p = document.createElement('p');
+                                    p.textContent = cfValue;
+                                    clone2.querySelector('.singleEventOnDate').appendChild(p);
+                                }
+                            } else if(cf == "language" && cfValue.length>1){
+                                let langSpan = document.createElement('span');
+                                langSpan.className = "lang";
+                                let langImg = document.createElement('img');
+                                langImg.setAttribute('src', "img/lang-icon_50.png");
+                                langImg.setAttribute('alt', "langIcon");
+                                langImg.classList.add('lang-icon');
+
+                                clone2.querySelector('.singleEventOnDate').appendChild(langImg);
+                                for (let i=0; i<cfValue.length; i++){
+                                    let span = document.createElement('span');
+                                    span.textContent = cfValue[i] + "  ";
+                                    clone2.querySelector('.singleEventOnDate').appendChild(langSpan);
+                                    clone2.querySelector('.singleEventOnDate span.lang').appendChild(span);
+                                }
+                                clone2.querySelector('.singleEventOnDate span.lang').textContent = clone2.querySelector('.singleEventOnDate span.lang').textContent.replace(/\s+/, ' / ');
+                            } else if(cf == "language" && cfValue.length ==1 ){
+                                let langSpan = document.createElement('span');
+                                langSpan.className = "lang";
+                                let langImg = document.createElement('img');
+                                langImg.setAttribute('src', "img/lang-icon_50.png");
+                                langImg.setAttribute('alt', "langIcon");
+                                langImg.classList.add('lang-icon');
+                                clone2.querySelector('.singleEventOnDate').appendChild(langImg);
+                                let span = document.createElement('span');
+                                span.textContent = cfValue;
+                                clone2.querySelector('.singleEventOnDate').appendChild(span);
+                            } else if(cf == "price_to_rent_the_game" || cf == "type_of_game"){
+                            } else if(cf == "description"){
+                                let p = document.createElement('p');
+                                p.className= 'read-more';
+                                p.textContent = "... read more ...";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else {
+                                let cfName = cf;
+                                let p = document.createElement('p');
+                                p.className = "p-cf, " + cfName; // for styling
+                                let index = acfs.indexOf(cf);
+                                p.textContent = cfName + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
+                                if (Object.values(e.acf)[index]) {
+                                    clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
+                                }
                             }
                         }
                     }

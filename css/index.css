@@ -12,6 +12,10 @@
     font-family: text-medium;
     src: url(../font/avenir-next-medium.ttf);
 }
+@font-face {
+    font-family: huset;
+    src: url(../font/huset-regular.otf);
+}
 :root {
     --blue: #d4edf5;
     --red: #c63538;
@@ -39,6 +43,7 @@ body {
     font-family: text-medium;
 }
 aside {
+    z-index: 2;
     background-color: rgba(255,255,255,.97);
     position: fixed;
     left: 0;
@@ -51,12 +56,19 @@ aside {
     transition: all .1s ease-out;
 }
 aside.expand {
-    border-bottom: 1px solid var(--purple);
-    width: 69%;
+    background: var(--black);
+    opacity: .97;
+    width: 79%;
+    height: calc( 100vh + 70px); /* had to move content position for functionality, so the height of aside gets longer than 100vh, need to set this way to avoid scrolling */
     z-index: 1;
+    padding: 30px 0 30px 30px;
 }
-aside>img {
+.corner-icon {
     width: 50px;
+}
+.corner-icon-pink {
+    width: 170px;
+    left: -10px;
 }
 aside>p {
     margin: 1.5em 0 1em;
@@ -76,12 +88,11 @@ aside>p {
     line-height: 1em;
 }
 a.chosen p {
-    transform: rotate(-90deg) translateY(13px);
+    transform: rotate(-90deg) translateY(13px) translateX(10px);
 }
 .type-icon {
     width: 40px;
     left: 23px;
-    top: 7px;
 }
 .major-category p, .all-types a {
     font-size: .6em;
@@ -112,8 +123,8 @@ main {
     width: 53%;
 }
 .date-filter {
-    position: absolute; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
-    bottom: 67px;
+    width: 90%;
+    margin: 55px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
 }
 .close-calender {
     font-size: .7em;
@@ -121,24 +132,24 @@ main {
 }
 .close-calender span {
     font-size: 1.3em;
-    color: var(--purple);
+    color: var(--pink);
 }
 p.button {
     display: inline-block;
     font-size: 1.3em;
-    top: 1.3em;
-    z-index: 3;
-    color: var(--purple);
+    z-index: 7;
+    top: 10px;
+    color: var(--pink);
 }
 p.plusMonth {
-    right: -53vw;
+    right: -59vw;
 }
 .month p span:nth-of-type(3) {
     width: 30px;
     margin-left: calc(31vw - 15px);
     font-family: title-bold;
     font-size: 1.3em;
-    color: var(--purple);
+    color: var(--pink);
 }
 .month p span:nth-of-type(2){
     display: none;
@@ -154,16 +165,27 @@ p.plusMonth {
 .date-filter a, .month {
     grid-column: 1/-1;
 }
+.month {
+    top: -20px;
+}
 .day {
     margin-top: .5em;
-    color: #bbb;
+    color: black;
 }
 .day.match {
-    color: #15174a;
+    color: var(--pink);
+}
+.match-day-clicked {
+    animation: loadEventOnDate 1s forwards ease-out;
+}
+@keyframes loadEventOnDate {
+    to {
+    opacity: 0;
+    }
 }
 .hint {
     grid-column: 1/-1;
-    color: var(--purple);
+    color: var(--pink);
     font-size: .7em;
     margin-top: 1em;
 }
@@ -176,6 +198,7 @@ p.plusMonth {
 }
 .eventList {
     width: 100%;
+    padding-top: 13px;
     padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
 }
 .eventList h1 {
@@ -192,7 +215,7 @@ p.plusMonth {
     font-size: 13px;
 }
 .singleEvent, .singleEventOnDate {
-    width: 77vw;
+    width: 75vw;
     padding: 30px 10px 30px 25px;
 }
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
@@ -201,6 +224,7 @@ p.plusMonth {
 .event-type-icon {
     float: right;
     width: 37px;
+    top: -20px;
 }
 .featuredImg {
     width: 93%;
@@ -216,6 +240,9 @@ p.plusMonth {
 }
 .blockA {
     background: white;
+}
+.extra-margin {
+    margin: 1em 0;
 }
 .hide {
     display: none;
