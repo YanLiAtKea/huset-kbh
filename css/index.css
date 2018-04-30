@@ -68,7 +68,7 @@ aside.expand {
     width: 50px;
 }
 .corner-icon-pink {
-    width: 150px;
+    width: 123px;
     left: -20px;
     top: -10px;
 }
@@ -126,7 +126,7 @@ main {
 }
 .date-filter {
     width: 90%;
-    margin: 35px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
+    margin: 40px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
 }
 .close-calender {
     font-size: .7em;
