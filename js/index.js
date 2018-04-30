@@ -8,9 +8,9 @@ function getMajorTypes(allCategories){
     allCategories.forEach(category => {
         let li = document.createElement("li");
         let a = document.createElement("a");
-        let icon = document.createElement('img');
+        //let icon = document.createElement('img');
         let p = document.createElement('p');
-        icon.classList.add('hide');
+        //icon.classList.add('hide');
         a.classList.add('major-category');
         if(category.parent === 12 || category.id === 33){ // include general events and board game events, not the board game posts
             if (category.name.indexOf("event")>-1){ // remove unnecessary text in the WP (in the WP these texts are useful as they help avoid condusion in similar categories)
@@ -22,10 +22,10 @@ function getMajorTypes(allCategories){
             }
             a.href="index.html?category="+category.id;
             cateArray.push(category.id); // so later can match category id in url, which shows which type is clicked, with which li is clicked. read few lines below
-            icon.classList.add('type-icon');
-            icon.src = "img/" + category.id + ".png";
+            //icon.classList.add('type-icon');
+            //icon.src = "img/" + category.id + ".png";
             a.appendChild(p);
-            a.appendChild(icon);
+            //a.appendChild(icon);
             li.appendChild(a);
             ul.appendChild(li);
         }
@@ -42,12 +42,12 @@ function getMajorTypes(allCategories){
     if(window.location.href.indexOf('?category')>-1){
         document.querySelector('.all-types a').classList.remove('chosen');
         let allTypes = document.querySelectorAll('.major-category');
-        let allTypeIcons = document.querySelectorAll('.type-icon');
+//        let allTypeIcons = document.querySelectorAll('.type-icon');
         let cateId = window.location.href.split('=')[1];
         for(let i=0; i<cateArray.length; i++){
             if(cateId == cateArray[i]){
                 allTypes[i].classList.add('chosen');
-                allTypeIcons[i].classList.remove('hide');
+//                allTypeIcons[i].classList.remove('hide');
             }
         }
     }
@@ -59,6 +59,36 @@ let eventList = document.querySelector(".eventList");
 let lookingForData = false;
 let pageNr = 1;
 let urlParams = new URLSearchParams(window.location.search);
+getGenreFilter();
+function getGenreFilter(){
+    let categoryId = urlParams.get("category");
+    let fetchLink = "https://onestepfurther.nu/cms/wp-json/wp/v2/posts/?_embed&categories=" + categoryId;
+    if(categoryId && categoryId !=='33' && categoryId !== '11'){ //exclude "board game" type and "other" type, since they don't have genre set up
+        fetch(fetchLink)
+            .then(e=>e.json())
+            .then(generateGenreList);
+    }
+    function generateGenreList(allPostWithinType){
+        let genres = [];
+        allPostWithinType.forEach(getGenre);
+        function getGenre(p) {
+            let genre = p.acf.genre;
+            if(genre && genres.indexOf(genre)<0){ // so no duplicate genre
+                genres.push(genre);
+            } else if (!genre){ // if a post has no genre set, then sort this in the "other" sub cate
+                genres.push('other');
+            }
+        }
+        let genreLine = document.createElement('p');
+        genreLine.classList.add('genre-line');
+        genres.forEach(addGenreAsSubCate);
+        function addGenreAsSubCate(g){
+            let a = document.createElement('a');
+            genreLine.innerHTML += "<a class='genre-sub'>- " + g + "</a>";
+        }
+        document.querySelector('.chosen').parentElement.appendChild(genreLine);
+    }
+}
 loadList();
 function loadList(){
     lookingForData = true;
@@ -232,6 +262,21 @@ function bottomVisible() {
   return bottomOfPage || pageHeight < visible
 }
 
+/////////// click on "by type" ///////////
+document.querySelector('.by-type').addEventListener('click', showCategoryList);
+function showCategoryList(){
+    document.querySelector('img.dark-green').classList.add('big');
+    document.querySelector('aside').classList.add('tilt');
+    document.querySelector('.type-filter').classList.remove('hide');
+}
+
+/////////// click on "close by type" ///////////
+document.querySelector('.close-by-type').addEventListener('click', hideCategoryList);
+function hideCategoryList(){
+    document.querySelector('img.dark-green').classList.remove('big');
+    document.querySelector('aside').classList.remove('tilt');
+    document.querySelector('.type-filter').classList.add('hide');
+}
 
 /////////// generate calendar ///////////
 let currentMonth = new Date().getMonth()+1;
@@ -332,7 +377,7 @@ function collapseCalender(){
     if (datePicked == true){
         if (document.querySelector('.chosen')){
             document.querySelector('.chosen').classList.remove('chosen');
-            document.querySelectorAll('.type-icon').forEach(function(ti){ti.classList.add('hide')});
+//            document.querySelectorAll('.type-icon').forEach(function(ti){ti.classList.add('hide')});
         }
         document.querySelector('.by-type').addEventListener('click', showCategoryList);
         function showCategoryList(){
