@@ -130,11 +130,14 @@ main {
 }
 .close-calender {
     font-size: .7em;
-    color: #bbb
 }
-.close-calender span {
+.close-calender span.X {
     font-size: 1.3em;
     color: var(--pink);
+}
+.close-calender span:not(.X) {
+    color: var(--pink);
+    opacity: .2;
 }
 p.button {
     display: inline-block;
