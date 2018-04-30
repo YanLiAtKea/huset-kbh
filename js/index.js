@@ -96,7 +96,7 @@ function showSingleEvent(singleEvent){
                 } else if(cf == "availability" && cfValue !== "available") {
                     let p = document.createElement('p');
                     p.classList.add('red');
-                    p.textContent = "!!! Currently sold-Out";
+                    p.textContent = "Currently sold-Out";
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue == "0"){
                     let p = document.createElement('p');
@@ -114,7 +114,11 @@ function showSingleEvent(singleEvent){
                 } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
                     let p = document.createElement('p');
                     p.className = "read-more";
-                    p.textContent = "... extra info ...";
+                    if(cfValue.length<200){ // if the text of extra info is not too long
+                        p.textContent = "!!! " + cfValue;
+                    } else {
+                        p.textContent = "... extra info ...";
+                    }
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "buy_ticket"){
                     if(Object.values(singleEvent.acf)[index].indexOf('http')>-1){
@@ -376,13 +380,13 @@ function clickOnDay(d){
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);
                     clone2.querySelector('h2').innerHTML = e.acf["major_type"]; // use innerHTML cuz title include html entities and tags
-                    if(e.categories.length>1){ // for the root cate, which is event, there is no icon designed. need to find the "actual" indicidual category
-                        clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[1] +"-black.png");
-                    } else {
-                        clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
-                                            console.log(e.categories[0], e.categories);
+                        if(e.categories.length>1){ // for the root cate, which is event, there is no icon designed. need to find the "actual" indicidual category
+                            clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[1] +"-black.png");
+                        } else {
+                            clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
+                                                console.log(e.categories[0], e.categories);
 
-                    }
+                        }
                     clone2.querySelector('h1').innerHTML = e.title.rendered;
                     clone2.querySelector('h1').classList.add('extra-margin'); // cuz list is not so long and crowded as in the list of all events
                     clone2.querySelector('span.hide').textContent = e.id;
@@ -396,13 +400,13 @@ function clickOnDay(d){
                         let index = acfs.indexOf(cf);
                         let cfValue = Object.values(e.acf)[index];
                         // get event details
-                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description"){ // don't deal with these for hand-in
+                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description" && cf !== "extra_link_url"){ // don't deal with these for hand-in
                             if(cf == "availability" && cfValue == "available"){
                             // don't show any thing in this cased
                             } else if(cf == "availability" && cfValue !== "available") {
                                 let p = document.createElement('p');
                                 p.classList.add('red');
-                                p.textContent = "!!! Currently sold-Out";
+                                p.textContent = "Currently sold-Out";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "price" && cfValue == "0"){
                                 let p = document.createElement('p');
@@ -446,7 +450,6 @@ function clickOnDay(d){
                                 langImg.setAttribute('src', "img/lang-icon_50.png");
                                 langImg.setAttribute('alt', "langIcon");
                                 langImg.classList.add('lang-icon');
-
                                 clone2.querySelector('.singleEventOnDate').appendChild(langImg);
                                 for (let i=0; i<cfValue.length; i++){
                                     let span = document.createElement('span');
@@ -483,11 +486,31 @@ function clickOnDay(d){
                                 p.innerHTML = "<p class='cfP'><img class='location' src='img/location.png' alt='location icon'>" + cfValue + "</p>";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
                             }
-                            else {
+
+                            else if (cf == "extra_link_name" && cfValue.indexOf(',')<0){
+                                let a = document.createElement('a');
+                                a.classList.add('blockA');
+                                a.classList.add('extra-margin');
+                                a.target = "_blank";
+                                a.textContent = cfValue;
+                                a.href = Object.values(e.acf)[index+1]; // the next key is the url, not the value of current key
+                                clone2.querySelector(".singleEventOnDate").appendChild(a);
+                            } else if (cf == "extra_link_name" && cfValue.indexOf(',')>-1){
+                                let nrOfExtraLink = cfValue.split(',').length;
+                                for(let i=0; i<nrOfExtraLink; i++){
+                                    let a = document.createElement('a');
+                                    a.classList.add('blockA');
+                                    a.classList.add('cfP');
+                                    a.target = "_blank";
+                                    a.textContent = cfValue.split(',')[i];
+                                    a.href = Object.values(e.acf)[index+1].split(',')[i];
+                                    clone2.querySelector(".singleEventOnDate").appendChild(a);
+                                }
+                            } else {
                                 let p = document.createElement('p');
-                                p.className = "cfP " + cf; // for styling
                                 let index = acfs.indexOf(cf);
-                                p.textContent = cf + ": " + Object.values(e.acf)[index]; // get corresponding value of each key and assign the value to the p
+                                p.className = "p-cf, " + cf; // for styling
+                                p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + "</p>";
                                 if (Object.values(e.acf)[index]) {
                                     clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
                                 }
