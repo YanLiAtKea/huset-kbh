@@ -15,8 +15,10 @@ function getMajorTypes(allCategories){
         if(category.parent === 12 || category.id === 33){ // include general events and board game events, not the board game posts
             if (category.name.indexOf("event")>-1){ // remove unnecessary text in the WP (in the WP these texts are useful as they help avoid condusion in similar categories)
                 p.textContent = category.name.slice(0, -5);
+                p.className = category.name.slice(0, -5);
             } else {
                 p.textContent = category.name;
+                p.className = category.name;
             }
             a.href="index.html?category="+category.id;
             cateArray.push(category.id); // so later can match category id in url, which shows which type is clicked, with which li is clicked. read few lines below
@@ -28,6 +30,13 @@ function getMajorTypes(allCategories){
             ul.appendChild(li);
         }
     })
+    // move the "other" category to the last position of the list
+    let other = document.querySelector('.Other');
+    other.parentElement.parentElement.parentElement.appendChild(other.parentElement.parentElement);
+    // also change the array of the category so the clicked=chosen function below, which is based on matching indexing in array, still workd
+    let otherSIndex = cateArray.indexOf(11); // use 11 instead of '11' as it'a number inside a array, not a string
+    cateArray.splice(otherSIndex, 1); // not slice!
+    cateArray.push(11);
     // when one type is chosen, highlight that type and show sub-categories or tags
     // can't use click a type as eventlistener and change the "chosen" one's class, because page will be reloaded after each click, the selector will be no longer available
     if(window.location.href.indexOf('?category')>-1){
@@ -88,7 +97,7 @@ function showSingleEvent(singleEvent){
         acfs.forEach(getSpecialCustomField);
         function getSpecialCustomField(cf){
             // get event details
-            if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url"){ // don't display these in the list view WITHIN any category
+            if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url" && cf !== "release_year"){ // don't display these in the list view WITHIN any category
                 let index = acfs.indexOf(cf);
                 let cfValue = Object.values(singleEvent.acf)[index];
                 if(cf == "availability" && cfValue == "available"){
@@ -175,7 +184,22 @@ function showSingleEvent(singleEvent){
                     p.className = "p-cf, " + cf; // for styling
                     p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + " min.</p>";
                     clone.querySelector('.singleEvent').appendChild(p);
-                } else {
+                } else if (cf == "related_event" && cfValue){
+                    let p = document.createElement('p');
+                    p.className = "related-event p-cf " + cf; // for styling
+                    let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
+                    for(let i= 0; i<cfValue.length; i++){
+                        pInnerHTML += "<p><span>➝</span><a href='single-event.html?id=";
+                        pInnerHTML += cfValue[i]["ID"];
+                        pInnerHTML += "'>"
+                        pInnerHTML += cfValue[i]["post_title"].split('-')[0];
+                        pInnerHTML += "</a></p>"
+                    }
+                    p.innerHTML = pInnerHTML;
+                    clone.querySelector('.singleEvent').appendChild(p);
+                }
+
+                else {
                     let cfValue = Object.values(singleEvent.acf)[index];
                     let p = document.createElement('p');
                     p.className = "p-cf, " + cf; // for styling
@@ -236,10 +260,12 @@ for(let month = 1; month<13; month++){
     }
         let hint = document.createElement('p');
         hint.className = "hint";
-        hint.textContent = "* date in highlighted color has event(s) registered already";
+        hint.innerHTML = " * date in highlighted color has event(s) registered already";
         document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(hint);
-
+//<p class='loading-dots'>. . . . . . .</p> checking the events
 }
+// for the defalt shown month, a loading event animation need to be shown, in case filter events on dates takes too long
+document.querySelector('.month:not(.hide) .hint').innerHTML = "<p class='loading-dots'>. . . . . . .</p> checking the events";
 // hide days not exsiting on certain months
 checkCorrectDaysNumber();
 function checkCorrectDaysNumber (){
@@ -331,6 +357,7 @@ function getEventDates(eventDates){
             eventStartDate = d.acf["date-start"].slice(4,8); // not working on year for this project, so only need the last digits in form of mmdd
             document.querySelector('.d' + eventStartDate).classList.add('id' + d.id);
             document.querySelector('.d' + eventStartDate).classList.add('match');
+        document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";
         }
         if(d.acf["date-start"] && d.acf["date-end"]){ // for events that is held over multiple days
             eventStartDate = d.acf["date-start"].slice(4,8);
@@ -345,6 +372,7 @@ function getEventDates(eventDates){
                 }
                 document.querySelector('.d' + i).classList.add('id' + d.id);
                 document.querySelector('.d'+ i).classList.add('match');
+        document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";
             }
         }
     }
@@ -384,8 +412,6 @@ function clickOnDay(d){
                             clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[1] +"-black.png");
                         } else {
                             clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
-                                                console.log(e.categories[0], e.categories);
-
                         }
                     clone2.querySelector('h1').innerHTML = e.title.rendered;
                     clone2.querySelector('h1').classList.add('extra-margin'); // cuz list is not so long and crowded as in the list of all events

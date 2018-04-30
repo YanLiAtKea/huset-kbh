@@ -36,10 +36,7 @@ function showSingleEvent(singleEvent){
             let p = document.createElement('p');
             p.textContent = "Price: " + cfValue + " Kr.";
             document.querySelector(".post").appendChild(p);
-        }
-
-
-        else if (cfName == "language" && cfValue.length>1){
+        } else if (cfName == "language" && cfValue.length>1){
             let langSpan = document.createElement('span');
             langSpan.className = "lang";
             let langImg = document.createElement('img');

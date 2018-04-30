@@ -172,10 +172,12 @@ p.plusMonth {
 }
 .day {
     margin-top: .5em;
-    color: black;
+    color: var(--pink);
+    opacity: .2;
 }
 .day.match {
     color: var(--pink);
+    opacity: 1;
 }
 .match-day-clicked {
     animation: loadEventOnDate 1s forwards ease-out;
@@ -190,6 +192,21 @@ p.plusMonth {
     color: var(--pink);
     font-size: .7em;
     margin-top: 1em;
+}
+.loading-dots {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 2em;
+    overflow: hidden;
+    animation: loading-dots 4s steps(8) infinite;
+}
+@keyframes loading-dots {
+    from {
+        width: 0ch;
+    }
+    to {
+        width: 7ch;
+    }
 }
 .singleEvent .red {
     color: var(--red);
@@ -241,6 +258,7 @@ p.plusMonth {
     margin: 1em .2em 0 0;
 }
 .blockA {
+    font-size: .83em;
     background: white;
 }
 .location, .lang-icon {
