@@ -325,7 +325,8 @@ function getEventDates(eventDates){
         let eventEndDate;
         if(d.acf["date-start"]){ // use this to exclude board games, which don't have event start time
             eventStartDate = d.acf["date-start"].slice(4,8); // not working on year for this project, so only need the last digits in form of mmdd
-            document.querySelector('.d'+ eventStartDate).classList.add('match');
+            document.querySelector('.d' + eventStartDate).classList.add('id' + d.id);
+            document.querySelector('.d' + eventStartDate).classList.add('match');
         }
         if(d.acf["date-start"] && d.acf["date-end"]){ // for events that is held over multiple days
             eventStartDate = d.acf["date-start"].slice(4,8);
@@ -338,6 +339,7 @@ function getEventDates(eventDates){
                 } else {
                     i = i.toString();
                 }
+                document.querySelector('.d' + i).classList.add('id' + d.id);
                 document.querySelector('.d'+ i).classList.add('match');
             }
         }
@@ -348,7 +350,6 @@ function getEventDates(eventDates){
 let allDays = document.querySelectorAll('.day');
 allDays.forEach(clickOnDay);
 function clickOnDay(d){
-
     d.addEventListener('click', filterByDate);
     function filterByDate(){
         if(d.className.indexOf('match')<0){ // check if it's a day with match. if not give hint
@@ -356,38 +357,26 @@ function clickOnDay(d){
             document.querySelector('.month:not(.hide) .hint').textContent = " No event on that day";
             setTimeout(function(){document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";
 }, 1300);
-        } else {
+        } else { // click on day with match
             document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";     // whenever a day is clicked, reset hint to this
             document.querySelectorAll('.singleEvent').forEach(function(e){e.classList.add('match-day-clicked')});
             document.querySelectorAll('.singleEventOnDate').forEach(function(e){e.classList.add('match-day-clicked')});
         }
-        // fint matching event(s)
-        let clickedDate = d.className.slice(5, 9); // get the date in format mmdd
-        fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=50")
-            .then(e=>e.json()).then(lookForDate);
+        // find matching event(s)
         let newEventList = document.createElement('div');
-        function lookForDate(es){
-            es.forEach(matchDate);
-            function matchDate(e){
-                if(e.acf["date-start"] && (e.acf["date-start"].slice(4) == clickedDate)){
-                    updateEventList();
-                }
-                else if(e.acf["date-start"] && e.acf["date-end"]){ // for the case that an event is held over multiple days, which means the clicked date may not necessarily be the same as the starting date
-                    let postId = e.id;
-                    let startNr = parseInt(e.acf["date-start"].slice(4,8), 10);
-                    let endNr = parseInt(e.acf["date-end"].slice(4,8), 10);
-                    let clickedDateNr = parseInt(clickedDate, 10);
-                    if((startNr <= clickedDateNr) && (clickedDateNr <= endNr)){
-                        updateEventList();
-                    }
-                }
-                function updateEventList(){
+        let idS = d.classList;
+        for(i=0; i<idS.length; i++){
+            if(idS[i].indexOf('id')>-1){
+                let id = idS[i].slice(2);
+                fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts/" + id + "?_embed")
+                    .then(e=>e.json()).then(updateEventList);
+                function updateEventList(e){
                     datePicked = true; // usded for different treatments regarding what to display after calender is collapsed
                     // overwrite current eventlist with matched event(s)
                     let template2 = document.querySelector('template.singleEventOnDate').content;
                     let clone2 = template2.cloneNode(true);
                     clone2.querySelector('h2').innerHTML = e.acf["major_type"]; // use innerHTML cuz title include html entities and tags
-                    if(e.categories.length>1){
+                    if(e.categories.length>1){ // for the root cate, which is event, there is no icon designed. need to find the "actual" indicidual category
                         clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[1] +"-black.png");
                     } else {
                         clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
