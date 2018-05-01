@@ -31,7 +31,7 @@
     position: fixed;
 }
 img.purple {
-    opacity: .87;
+    opacity: .83;
     width: 59px;
     top: 267px;
     right: 5px;
@@ -44,12 +44,14 @@ img.purple.big {
     width: 440px; /* cuz purple triangle is moved to the left a bit */
 }
 img.dark-green {
+    opacity: .9;
     width: 85px;
     z-index: 101;
     top: 61px;
     transition: all .1s ease-out;
 }
 img.dark-green.big {
+    opacity: 1;
     width: 290px;
 }
 .corner-icon {
