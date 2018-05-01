@@ -44,7 +44,7 @@ img.purple.big {
     width: 440px; /* cuz purple triangle is moved to the left a bit */
 }
 img.dark-green {
-    opacity: .9;
+    opacity: .95;
     width: 85px;
     z-index: 101;
     top: 61px;
@@ -166,10 +166,13 @@ a.chosen p {
     left: 29px;
     top: -19px;
 }
+.major-category {
+    margin-top: .9em;
+}
 .major-category p, .all-types a {
     color: var(--light-green);
     text-align: right;
-    font-size: .83em;
+    font-size: .9em;
     line-height: 1em;
 }
 .calendar {
@@ -207,12 +210,6 @@ main {
 .logo-map img {
     width: 100%;
     bottom: -20px;
-}
-.logo-map img.map {
-    position: fixed;
-    bottom: -10px;
-    right: -7%;
-    width: 53%;
 }
 .date-filter {
     z-index: 12;
@@ -327,19 +324,22 @@ p.plusMonth {
     font-family: title-bold;
     overflow: hidden;
     background: white;
-    padding: 1em 0;
+    padding: 0 0 1em 0;
 }
 .eventList p {
-    font-size: .83em;
+    font-size: .9em;
 }
 .eventList h2, .eventList img:not(.featuredImg) {
     display: inline-block;
-    font-family: text-medium;
+    font-family: title-bold;
     font-size: 13px;
+}
+.eventList h2 {
+    border-top: 2px solid var(--black);
 }
 .singleEvent, .singleEventOnDate {
     width: 75vw;
-    padding: 10px 10px 30px 25px;
+    padding: 10px 10px 20px 25px;
 }
 /*
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
@@ -375,6 +375,9 @@ span.lang {
 }
 .extra-margin {
     margin: 1em 0;
+}
+a.inline {
+    display: inline;
 }
 .hide {
     display: none;

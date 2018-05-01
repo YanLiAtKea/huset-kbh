@@ -1,8 +1,3 @@
-function updateCurrentType(){
-    document.querySelector('.current-type').textContent = document.querySelector('.chosen p').textContent;
-    document.querySelector('aside').classList.add('narrow');
-}
-
 /////////// build main filter of major category and the sub-categories/tags on the left ///////////
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/categories")
     .then(e=>e.json())
@@ -57,6 +52,10 @@ function getMajorTypes(allCategories){
             }
         }
     }
+}
+function updateCurrentType(){
+    document.querySelector('.current-type').textContent = document.querySelector('.chosen p').textContent;
+    document.querySelector('aside').classList.add('narrow');
 }
 
 /////////// load event list in pages///////////
@@ -133,9 +132,10 @@ function showSingleEvent(singleEvent){
         acfs.forEach(getSpecialCustomField);
         function getSpecialCustomField(cf){
             // get event details
-            if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url" && cf !== "release_year"){ // don't display these in the list view WITHIN any category
+            if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url" && cf !== "release_year"  && cf !== "game_played"){ // don't display these in the list view WITHIN any category
                 let index = acfs.indexOf(cf);
                 let cfValue = Object.values(singleEvent.acf)[index];
+
                 if(cf == "availability" && cfValue == "available"){
                     // don't show any thing in this cased
                 } else if(cf == "availability" && cfValue !== "available") {
@@ -149,7 +149,6 @@ function showSingleEvent(singleEvent){
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue !== "0") {
                     let p = document.createElement('p');
-                    p.classList.add('normal-price');
                     p.textContent = "Price: " + cfValue + " Kr.";
                     clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
@@ -225,7 +224,7 @@ function showSingleEvent(singleEvent){
                     p.className = "related-event p-cf " + cf; // for styling
                     let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
                     for(let i= 0; i<cfValue.length; i++){
-                        pInnerHTML += "<p><span>➝</span><a href='single-event.html?id=";
+                        pInnerHTML += "<p><span>➝ </span><a class='inline' href='single-event.html?id=";
                         pInnerHTML += cfValue[i]["ID"];
                         pInnerHTML += "'>"
                         pInnerHTML += cfValue[i]["post_title"].split('-')[0];
@@ -233,9 +232,7 @@ function showSingleEvent(singleEvent){
                     }
                     p.innerHTML = pInnerHTML;
                     clone.querySelector('.singleEvent').appendChild(p);
-                }
-
-                else {
+                } else {
                     let cfValue = Object.values(singleEvent.acf)[index];
                     let p = document.createElement('p');
                     p.className = "p-cf, " + cf; // for styling
@@ -490,8 +487,18 @@ function clickOnDay(d){
                         let index = acfs.indexOf(cf);
                         let cfValue = Object.values(e.acf)[index];
                         // get event details
-                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "description" && cf !== "extra_link_url"){ // don't deal with these for hand-in
-                            if(cf == "availability" && cfValue == "available"){
+                        if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "extra_link_url" && cf !== "game_played"){ // don't deal with these for hand-in
+                            if(cf == "description" && cfValue.length < 200){ // display only the full text of short descriptions
+                                let p = document.createElement('p');
+                                p.classList.add('extra-margin');
+                                p.textContent = cfValue;
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if (cf == "description" && cfValue.length >= 200){
+                                let p = document.createElement('p');
+                                p.classList.add('extra-margin');
+                                p.textContent = "... read more ...";
+                                clone2.querySelector('.singleEventOnDate').appendChild(p);
+                            } else if(cf == "availability" && cfValue == "available"){
                             // don't show any thing in this cased
                             } else if(cf == "availability" && cfValue !== "available") {
                                 let p = document.createElement('p');
@@ -500,11 +507,12 @@ function clickOnDay(d){
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "price" && cfValue == "0"){
                                 let p = document.createElement('p');
+                                p.classList.add('cfP');
                                 p.textContent = "FREE";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "price" && cfValue !== "0") {
                                 let p = document.createElement('p');
-                                p.classList.add('normal-price');
+                                p.classList.add('cfP');
                                 p.textContent = "Price: " + cfValue + " Kr.";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
@@ -575,9 +583,7 @@ function clickOnDay(d){
                                 p.className = "cfP " + cf; // for styling
                                 p.innerHTML = "<p class='cfP'><img class='location' src='img/location.png' alt='location icon'>" + cfValue + "</p>";
                                 clone2.querySelector('.singleEventOnDate').appendChild(p);
-                            }
-
-                            else if (cf == "extra_link_name" && cfValue.indexOf(',')<0){
+                            } else if (cf == "extra_link_name" && cfValue.indexOf(',')<0){
                                 let a = document.createElement('a');
                                 a.classList.add('blockA');
                                 a.classList.add('extra-margin');
@@ -596,7 +602,28 @@ function clickOnDay(d){
                                     a.href = Object.values(e.acf)[index+1].split(',')[i];
                                     clone2.querySelector(".singleEventOnDate").appendChild(a);
                                 }
-                            } else {
+                            }
+
+                            else if (cf == "related_event" && cfValue){
+                    let p = document.createElement('p');
+                    p.className = "related-event p-cf " + cf; // for styling
+                    let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
+                    for(let i= 0; i<cfValue.length; i++){
+                        pInnerHTML += "<p><span>➝ </span><a class='inline' href='single-event.html?id=";
+                        pInnerHTML += cfValue[i]["ID"];
+                        pInnerHTML += "'>"
+                        pInnerHTML += cfValue[i]["post_title"].split('-')[0];
+                        pInnerHTML += "</a></p>"
+                    }
+                    p.innerHTML = pInnerHTML;
+                    clone2.querySelector('.singleEventOnDate').appendChild(p);
+                }
+
+
+
+
+
+                            else {
                                 let p = document.createElement('p');
                                 let index = acfs.indexOf(cf);
                                 p.className = "p-cf, " + cf; // for styling
