@@ -488,42 +488,28 @@ function clickOnDay(d){
                         let cfValue = Object.values(e.acf)[index];
                         // get event details
                         if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "extra_link_url" && cf !== "game_played"){ // don't deal with these for hand-in
+                            let p = document.createElement('p');
                             if(cf == "description" && cfValue.length < 200){ // display only the full text of short descriptions
-                                let p = document.createElement('p');
                                 p.classList.add('extra-margin');
                                 p.textContent = cfValue;
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if (cf == "description" && cfValue.length >= 200){
-                                let p = document.createElement('p');
                                 p.classList.add('extra-margin');
                                 p.textContent = "... read more ...";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "availability" && cfValue == "available"){
                             // don't show any thing in this cased
                             } else if(cf == "availability" && cfValue !== "available") {
-                                let p = document.createElement('p');
                                 p.classList.add('red');
                                 p.textContent = "Currently sold-Out";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "price" && cfValue == "0"){
-                                let p = document.createElement('p');
                                 p.classList.add('cfP');
                                 p.textContent = "FREE";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "price" && cfValue !== "0") {
-                                let p = document.createElement('p');
-                                p.classList.add('cfP');
                                 p.textContent = "Price: " + cfValue + " Kr.";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
-                                let p = document.createElement('p');
                                 p.textContent = cfValue.replace('Forsalg', "Presale").replace('gebyr', 'fee');
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
-                                let p = document.createElement('p');
                                 p.className = "read-more";
                                 p.textContent = "... extra info ...";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "buy_ticket"){
                                 if(cfValue.indexOf('http')>-1){
                                     let a = document.createElement('a');
@@ -533,13 +519,9 @@ function clickOnDay(d){
                                     a.textContent = "Buy ticket online";
                                     clone2.querySelector('.singleEventOnDate').appendChild(a);
                                 } else if(cfValue.indexOf('KØB')>-1) {
-                                    let p = document.createElement('p');
                                     p.textContent = " Buy ticket at the entrance";
-                                    clone2.querySelector('.singleEventOnDate').appendChild(p);
                                 } else {
-                                    let p = document.createElement('p');
                                     p.textContent = cfValue;
-                                    clone2.querySelector('.singleEventOnDate').appendChild(p);
                                 }
                             } else if(cf == "language" && cfValue.length>1){
                                 let langSpan = document.createElement('span');
@@ -569,20 +551,14 @@ function clickOnDay(d){
                                 clone2.querySelector('.singleEventOnDate').appendChild(span);
                             } else if(cf == "price_to_rent_the_game" || cf == "type_of_game"){
                             } else if(cf == "description"){
-                                let p = document.createElement('p');
                                 p.className= 'read-more';
                                 p.textContent = "... read more ...";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if(cf == "duration" && cfValue){
-                                let p = document.createElement('p');
                                 p.className = "cfP, " + cf; // for styling
                                 p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + " min.</p>";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if (cf == "location") {
-                                let p = document.createElement('p');
                                 p.className = "cfP " + cf; // for styling
                                 p.innerHTML = "<p class='cfP'><img class='location' src='img/location.png' alt='location icon'>" + cfValue + "</p>";
-                                clone2.querySelector('.singleEventOnDate').appendChild(p);
                             } else if (cf == "extra_link_name" && cfValue.indexOf(',')<0){
                                 let a = document.createElement('a');
                                 a.classList.add('blockA');
@@ -602,28 +578,18 @@ function clickOnDay(d){
                                     a.href = Object.values(e.acf)[index+1].split(',')[i];
                                     clone2.querySelector(".singleEventOnDate").appendChild(a);
                                 }
-                            }
-
-                            else if (cf == "related_event" && cfValue){
-                    let p = document.createElement('p');
-                    p.className = "related-event p-cf " + cf; // for styling
-                    let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
-                    for(let i= 0; i<cfValue.length; i++){
-                        pInnerHTML += "<p><span>➝ </span><a class='inline' href='single-event.html?id=";
-                        pInnerHTML += cfValue[i]["ID"];
-                        pInnerHTML += "'>"
-                        pInnerHTML += cfValue[i]["post_title"].split('-')[0];
-                        pInnerHTML += "</a></p>"
-                    }
-                    p.innerHTML = pInnerHTML;
-                    clone2.querySelector('.singleEventOnDate').appendChild(p);
-                }
-
-
-
-
-
-                            else {
+                            } else if (cf == "related_event" && cfValue){
+                                p.className = "related-event p-cf " + cf; // for styling
+                                let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
+                                for(let i= 0; i<cfValue.length; i++){
+                                    pInnerHTML += "<p><span>➝ </span><a class='inline' href='single-event.html?id=";
+                                    pInnerHTML += cfValue[i]["ID"];
+                                    pInnerHTML += "'>"
+                                    pInnerHTML += cfValue[i]["post_title"].split('-')[0];
+                                    pInnerHTML += "</a></p>"
+                                }
+                                p.innerHTML = pInnerHTML;
+                            } else {
                                 let p = document.createElement('p');
                                 let index = acfs.indexOf(cf);
                                 p.className = "p-cf, " + cf; // for styling
@@ -632,6 +598,7 @@ function clickOnDay(d){
                                     clone2.querySelector('.singleEventOnDate').appendChild(p); // only append when has value
                                 }
                             }
+                            clone2.querySelector('.singleEventOnDate').appendChild(p);
                         }
                     }
                     newEventList.appendChild(clone2);
