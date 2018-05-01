@@ -138,35 +138,26 @@ function showSingleEvent(singleEvent){
             if (cf !== "major_type" && cf !== "date-start" && cf !== "date-end" && cf !== "hour_program-start" && cf !== "minute_program-start" && cf !== "hour_entrance" && cf !== "minute-entrance" && cf !== "location" && cf !== "extra_link_name" && cf !== "extra_link_url" && cf !== "release_year"  && cf !== "game_played"){ // don't display these in the list view WITHIN any category
                 let index = acfs.indexOf(cf);
                 let cfValue = Object.values(singleEvent.acf)[index];
+                let p = document.createElement('p');
 
                 if(cf == "availability" && cfValue == "available"){
                     // don't show any thing in this cased
                 } else if(cf == "availability" && cfValue !== "available") {
-                    let p = document.createElement('p');
                     p.classList.add('red');
                     p.textContent = "Currently sold-Out";
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue == "0"){
-                    let p = document.createElement('p');
                     p.textContent = "FREE";
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "price" && cfValue !== "0") {
-                    let p = document.createElement('p');
                     p.textContent = "Price: " + cfValue + " Kr.";
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "extra_info" && cfValue.indexOf('Forsalg')>-1) {
-                    let p = document.createElement('p');
                     p.textContent = cfValue.replace('Forsalg', "Presale").replace('gebyr', 'fee');
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "extra_info" && cfValue && cfValue.indexOf('Forsalg')<0) {
-                    let p = document.createElement('p');
                     p.className = "read-more";
                     if(cfValue.length<200){ // if the text of extra info is not too long
                         p.textContent = "!!! " + cfValue;
                     } else {
                         p.textContent = "... extra info ...";
                     }
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "buy_ticket"){
                     if(Object.values(singleEvent.acf)[index].indexOf('http')>-1){
                         let a = document.createElement('a');
@@ -176,13 +167,9 @@ function showSingleEvent(singleEvent){
                         a.textContent = "Buy ticket online";
                         clone.querySelector('.singleEvent').appendChild(a);
                     } else if(Object.values(singleEvent.acf)[index].indexOf('KØB')>-1) {
-                        let p = document.createElement('p');
                         p.textContent = " Buy ticket at the entrance";
-                        clone.querySelector('.singleEvent').appendChild(p);
                     } else {
-                        let p = document.createElement('p');
                         p.textContent = cfValue;
-                        clone.querySelector('.singleEvent').appendChild(p);
                     }
                 } else if(cf == "language" && cfValue.length>1){
                     let langSpan = document.createElement('span');
@@ -191,7 +178,6 @@ function showSingleEvent(singleEvent){
                     langImg.setAttribute('src', "img/lang-icon_50.png");
                     langImg.setAttribute('alt', "langIcon");
                     langImg.classList.add('lang-icon');
-
                     clone.querySelector('.singleEvent').appendChild(langImg);
                     for (let i=0; i<cfValue.length; i++){
                         let span = document.createElement('span');
@@ -213,17 +199,12 @@ function showSingleEvent(singleEvent){
                     clone.querySelector('.singleEvent').appendChild(span);
                 } else if(cf == "price_to_rent_the_game" || cf == "type_of_game"){
                 } else if(cf == "description"){
-                    let p = document.createElement('p');
                     p.className= 'read-more';
                     p.textContent = "... read more ...";
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if(cf == "duration" && cfValue){
-                    let p = document.createElement('p');
                     p.className = "p-cf, " + cf; // for styling
                     p.innerHTML = "<p class='cfP'>" + cf + ": </p><p>" + cfValue + " min.</p>";
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else if (cf == "related_event" && cfValue){
-                    let p = document.createElement('p');
                     p.className = "related-event p-cf " + cf; // for styling
                     let pInnerHTML = "<p class='cfP'>" + cf + ": </p>";
                     for(let i= 0; i<cfValue.length; i++){
@@ -234,7 +215,6 @@ function showSingleEvent(singleEvent){
                         pInnerHTML += "</a></p>"
                     }
                     p.innerHTML = pInnerHTML;
-                    clone.querySelector('.singleEvent').appendChild(p);
                 } else {
                     let cfValue = Object.values(singleEvent.acf)[index];
                     let p = document.createElement('p');
@@ -245,6 +225,7 @@ function showSingleEvent(singleEvent){
                         clone.querySelector('.singleEvent').appendChild(p); // only append when has value
                     }
                 }
+                clone.querySelector('.singleEvent').appendChild(p);
             }
         }
         eventList.appendChild(clone);
