@@ -33,13 +33,13 @@
 img.purple {
     opacity: .83;
     width: 59px;
-    top: 267px;
+    top: 257px;
     right: 5px;
     z-index: 4;
     transition: all .1s ease-out;
 }
 img.purple.big {
-    top: 180px;
+    top: 170px;
     opacity: .95;
     width: 440px; /* cuz purple triangle is moved to the left a bit */
 }
@@ -47,7 +47,7 @@ img.dark-green {
     opacity: .95;
     width: 85px;
     z-index: 101;
-    top: 61px;
+    top: 51px;
     transition: all .1s ease-out;
 }
 img.dark-green.big {
@@ -80,8 +80,8 @@ body {
 aside {
     z-index: 102;
     position: fixed;
-    left: -3px;
-    top: 80px;
+    left: -5px;
+    top: 70px;
     padding: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -179,12 +179,12 @@ a.chosen p {
     z-index: 4;
     position: fixed;
     right: 5px;
-    top: 290px;
+    top: 280px;
 }
 .calendar.expand {
     width: 300px;
     z-index: 11;
-    top: 390px;
+    top: 380px;
 
 }
 .calendar .by-date {
@@ -381,4 +381,7 @@ a.inline {
 }
 .hide {
     display: none;
+}
+.d0101 {
+    grid-column-start: 2;
 }
