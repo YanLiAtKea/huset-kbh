@@ -31,10 +31,17 @@
     position: fixed;
 }
 img.purple {
-    width: 67px;
-    z-index: 100;
-    top: 273px;
-    right: 10px;
+    opacity: .87;
+    width: 59px;
+    top: 287px;
+    right: 5px;
+    z-index: 4;
+}
+img.purple.big {
+    top: 210px;
+    opacity: .95;
+    width: 440px; /* cuz purple triangle is moved to the left a bit */
+    transition: all .1s ease-out;
 }
 img.dark-green {
     width: 97px;
@@ -93,7 +100,6 @@ aside.tilt {
     transform: rotate(-45deg) translateX(-230px) translateY(30px);
     transform-origin: 5% 33%;
     overflow: visible;
-
 }
 aside.expand {
     background: var(--black);
@@ -103,12 +109,9 @@ aside.expand {
     z-index: 1;
     padding: 30px 0 30px 30px;
 }
-aside>p {
+aside>p, .calendar>p {
     margin: 1.5em 0 1em;
     font-size: .7em;
-    color: #8a8b8a;
-}
-.by-type {
     color: var(--white);
 }
 .current-type {
@@ -172,6 +175,24 @@ a.chosen p {
     font-size: .83em;
     line-height: 1em;
 }
+.calendar {
+    z-index: 4;
+    position: fixed;
+    right: 5px;
+    top: 310px;
+}
+.calendar.expand {
+    width: 300px;
+    z-index: 11;
+    top: 450px;
+
+}
+.calendar .by-date {
+    text-align: left;
+    z-index: 7;
+    color: var(--purple);
+    transform: translate(5px) rotate(-90deg);
+}
 main {
     grid-column-start: 2;
     overflow: hidden;
@@ -197,11 +218,16 @@ main {
     width: 53%;
 }
 .date-filter {
-    width: 90%;
-    margin: 40px 0 0 0; /* keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
+    z-index: 12;
+    width: 230px;
+    left: 67px;
+    top: -53px;
+    /*margin: 40px 0 0 0;  keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
 }
 .close-calender {
+    text-align: right;
     font-size: .7em;
+    padding-right: 11px;
 }
 .close-calender span.X {
     font-size: 1.3em;
@@ -219,7 +245,7 @@ p.button {
     color: var(--pink);
 }
 p.plusMonth {
-    right: -59vw;
+    right: -50vw;
 }
 .month p span:nth-of-type(3) {
     width: 30px;
@@ -265,7 +291,7 @@ p.plusMonth {
 .hint {
     grid-column: 1/-1;
     color: var(--pink);
-    font-size: .7em;
+    font-size: .6em;
     margin-top: 1em;
 }
 .loading-dots {
@@ -299,6 +325,8 @@ p.plusMonth {
     font-size: 1.1em;
     font-family: title-bold;
     overflow: hidden;
+    background: white;
+    padding: 1em 0;
 }
 .eventList p {
     font-size: .83em;
@@ -312,13 +340,14 @@ p.plusMonth {
     width: 75vw;
     padding: 30px 10px 30px 25px;
 }
+/*
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
     background: white;
-}
+} */
 .event-type-icon {
     float: right;
     width: 37px;
-    top: -20px;
+    top: -10px;
 }
 .featuredImg {
     width: 93%;

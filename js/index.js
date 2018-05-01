@@ -271,6 +271,7 @@ function bottomVisible() {
 /////////// click on "by type" ///////////
 document.querySelector('.by-type').addEventListener('click', showCategoryList);
 function showCategoryList(){
+
     document.querySelector('.current-type').classList.add('hide');
     document.querySelector('img.dark-green').classList.add('big');
     document.querySelector('.type-filter').classList.add('expand-type-filter');
@@ -280,8 +281,8 @@ function showCategoryList(){
 }
 
 /////////// click on "close by type" ///////////
-document.querySelector('.close-by-type').addEventListener('click', hideCategoryList);
-function hideCategoryList(){
+document.querySelector('.close-by-type').addEventListener('click', closeTypeFilter);
+function closeTypeFilter(){
     document.querySelector('img.dark-green').classList.remove('big');
     document.querySelector('.type-filter').classList.remove('expand-type-filter');
     document.querySelector('aside').classList.remove('tilt');
@@ -364,27 +365,19 @@ let datePicked; // need this to handle the collapse calender result. If no date 
 document.querySelector('.by-date').addEventListener('click', showCalender);
 function showCalender(){
     datePicked = false;
+    document.querySelector('img.dark-green').classList.remove('big');
+    closeTypeFilter();
+    document.querySelector('img.purple').classList.add('big');
+    document.querySelector('.calendar').classList.add('expand');
     document.querySelector('.date-filter').classList.remove('hide');
-    document.querySelector('.type-filter').classList.add('hide');
-    document.querySelector('.by-type').classList.add('hide');
     document.querySelector('.by-date').classList.add('hide');
-    document.querySelector('.or').classList.add('hide');
-    document.querySelector('aside').classList.add('expand');
-    document.querySelector('.corner-icon').classList.add('hide');
-    document.querySelector('.corner-icon-pink').classList.remove('hide');
 }
 
 
 // click to collapse calender
-document.querySelector('.close-calender').addEventListener('click', collapseCalender);
+document.querySelector('.close-calender').addEventListener('click', closeDateFilter);
 function collapseCalender(){
-    document.querySelector('.by-type').classList.remove('hide');
-    document.querySelector('.or').classList.remove('hide');
-    document.querySelector('.corner-icon').classList.remove('hide');
-    document.querySelector('.corner-icon-pink').classList.add('hide');
-    document.querySelector('.date-filter').classList.add('hide');
-    document.querySelector('.by-date').classList.remove('hide');
-    document.querySelector('aside').classList.remove('expand');
+    closeDateFilter();
     if (datePicked == true){
         if (document.querySelector('.chosen')){
             document.querySelector('.chosen').classList.remove('chosen');
@@ -397,6 +390,12 @@ function collapseCalender(){
     } else {
         document.querySelector('.type-filter').classList.remove('hide');
     }
+}
+function closeDateFilter(){
+    document.querySelector('img.purple').classList.remove('big');
+    document.querySelector('.by-date').classList.remove('hide');
+    document.querySelector('.date-filter').classList.add('hide');
+    document.querySelector('.calendar').classList.remove('expand');
 }
 
 /////////// show events on calender ///////////
@@ -446,6 +445,14 @@ function clickOnDay(d){
             setTimeout(function(){document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";
 }, 1300);
         } else { // click on day with match
+            if(document.querySelector('.chosen')){ // the first click on matched day should clear chosen, from the second click on matched day on, there will be no more .chosen. so check existance first
+                document.querySelector('.chosen').classList.remove('chosen'); // cuz an event based on a date is chose and this event may not be of the same type of the current type displayed, so need to remove this info to avoid confusion
+                document.querySelector('.current-type').classList.add('hide'); // this line shows which was last picked as chosen type, need to be removed as well
+                if(document.querySelector('.genre-line')){
+                    document.querySelector('.genre-line').remove(); // inside there could be a line of genre, need to be removed as well.
+                }
+            }
+            document.querySelector('.triangle').setAttribute('src', "img/triangle_purple_300.png");
             document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";     // whenever a day is clicked, reset hint to this
             document.querySelectorAll('.singleEvent').forEach(function(e){e.classList.add('match-day-clicked')});
             document.querySelectorAll('.singleEventOnDate').forEach(function(e){e.classList.add('match-day-clicked')});
@@ -470,7 +477,6 @@ function clickOnDay(d){
                             clone2.querySelector('.event-type-icon').setAttribute('src', "img/" + e.categories[0] +"-black.png");
                         }
                     clone2.querySelector('h1').innerHTML = e.title.rendered;
-                    clone2.querySelector('h1').classList.add('extra-margin'); // cuz list is not so long and crowded as in the list of all events
                     clone2.querySelector('span.hide').textContent = e.id;
                     if(e._embedded["wp:featuredmedia"]){
                         clone2.querySelector('.featuredImg').setAttribute("src", e._embedded["wp:featuredmedia"][0].media_details.sizes.medium.source_url);
