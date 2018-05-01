@@ -106,7 +106,7 @@ aside.expand {
 aside>p:not(.current-type), .calendar>p {
     margin: 1.5em 0 1em;
     font-size: .7em;
-    color: var(--white);
+    color: var(--dark-green);
 }
 .current-type {
     font-size: .8em;
@@ -121,6 +121,7 @@ aside.tilt .by-type {
     display: none;
 }
 aside.tilt .close-by-type {
+    color: var(--light-green);
     display: inherit;
     text-align: right;
     font-size: 1.1em;
