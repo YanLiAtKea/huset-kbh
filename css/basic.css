@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+@font-face {
+    font-family: title-bold;
+    src: url(../font/avenir-next-demi-bold.ttf);
+}
+@font-face {
+    font-family: text-medium;
+    src: url(../font/avenir-next-medium.ttf);
+}
+@font-face {
+    font-family: huset;
+    src: url(../font/huset-regular.otf);
+}
+:root {
+    --blue: #d4edf5;
+    --red: #c63538;
+    --purple: #15174a;
+    --pink: #f8dce3;
+    --white: #fffffe;
+    --grey: #8a8b8a;
+    --black: #1b1919;
+    --dark-green: #29562d;
+    --light-green: #d8e9cb;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    margin-top: .9em;
+}
+a {
+    display: block;
+    color: var(--black);
+}
+body {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    font-family: text-medium;
+}
+
+main {
+    grid-column-start: 2;
+    overflow: hidden;
+}
+.singleEvent .red {
+    color: var(--red);
+    font-size: .67em;
+}
+.read-more {
+    padding-bottom: 1em;
+}
+.eventList {
+    width: 100%;
+    padding-top: 13px;
+    padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
+}
+h1 {
+    font-size: 1em;
+    font-family: title-bold;
+    overflow: hidden;
+    background: white;
+    padding: 0 0 1em 0;
+}
+.eventList p {
+    font-size: .9em;
+}
+.eventList h2, .eventList img:not(.featuredImg) {
+    display: inline-block;
+    font-family: title-bold;
+    font-size: 13px;
+}
+.eventList h2 {
+    border-top: 2px solid var(--black);
+}
+.singleEvent, .singleEventOnDate {
+    width: 75vw;
+    padding: 10px 10px 20px 25px;
+}
+/*
+.singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {
+    background: white;
+} */
+.cfP {
+    text-transform: uppercase;
+    padding-top: 1em; /* use padding instead of margin to eliminate the gaps between these elements, which will "cut through" the green triangel way too many times */
+}
+.blockA {
+    font-size: .83em;
+}
+.location, .lang-icon {
+    width: 13px;
+    height: auto;
+    margin-right: 5px;
+}
+span.lang {
+    font-size: .8em;
+}
+.extra-margin {
+    margin: 1em 0;
+}
+a.inline {
+    display: inline;
+}
+.hide {
+    display: none;
+}
+.d0101 {
+    grid-column-start: 2;
+}

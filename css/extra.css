@@ -1,0 +1,212 @@
+aside {
+    z-index: 102;
+    position: fixed;
+    left: -5px;
+    top: 70px;
+    padding: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: all 3s ease-out;
+    transition: height .0001s;
+}
+aside.narrow {
+    width: 90px;
+}
+aside.tilt {
+    width: 330px;
+    transform: rotate(-45deg) translateX(-230px) translateY(30px);
+    transform-origin: 5% 33%;
+    overflow: visible;
+}
+aside.expand {
+    background: var(--black);
+    opacity: .97;
+    width: 79%;
+    height: calc( 100vh + 70px); /* had to move content position for functionality, so the height of aside gets longer than 100vh, need to set this way to avoid scrolling */
+    z-index: 1;
+    padding: 30px 0 30px 30px;
+}
+aside>p:not(.current-type), .calendar>p {
+    margin: 1.5em 0 1em;
+    font-size: .7em;
+    color: var(--dark-green);
+}
+.current-type {
+    font-size: .8em;
+    color: var(--white);
+    opacity: .7;
+}
+aside.tilt .by-type {
+    text-align: right;
+    text-decoration: underline;
+}
+.close-by-type {
+    display: none;
+}
+aside.tilt .close-by-type {
+    color: var(--light-green);
+    display: inherit;
+    text-align: right;
+    font-size: 1.1em;
+}
+.type-filter {
+    height: 0;
+    transition: height .2s .1s ease-out;
+}
+.type-filter.expand-type-filter {
+    height: auto;
+}
+.type-filter a {
+    text-decoration: none;
+}
+.type-filter li a.chosen {
+    margin-top: 1.3em;
+    z-index: 2;
+}
+.type-filter li a.chosen, a.chosen p {
+/*    text-decoration: underline;*/
+    color: var(--light-green);
+    font-size: 1.2em;
+    line-height: 1em;
+}
+a.chosen p {
+/*    transform: rotate(-90deg) translateY(13px) translateX(10px);*/
+}
+.genre-line {
+    text-align: right;
+}
+.type-filter .genre-sub {
+    font-size: .7em;
+    color: var(--light-green);
+    display: inline-block;
+    margin-left: 1em;
+    text-decoration: underline;
+}
+.type-icon {
+    width: 40px;
+    left: 29px;
+    top: -19px;
+}
+.major-category {
+    margin-top: .9em;
+}
+.major-category p, .all-types a {
+    color: var(--light-green);
+    text-align: right;
+    font-size: .9em;
+    line-height: 1em;
+}
+.calendar {
+    z-index: 4;
+    position: fixed;
+    right: 5px;
+    top: 280px;
+}
+.calendar.expand {
+    width: 300px;
+    z-index: 11;
+    top: 380px;
+
+}
+.calendar .by-date {
+    text-align: left;
+    z-index: 7;
+    color: var(--purple);
+    transform: translate(5px) rotate(-90deg);
+}
+.date-filter {
+    z-index: 12;
+    width: 230px;
+    left: 65px;
+    top: -53px;
+    /*margin: 40px 0 0 0;  keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
+}
+.close-calender {
+    text-align: right;
+    font-size: .7em;
+    padding-right: 11px;
+}
+.close-calender span.X {
+    font-size: 1.3em;
+    color: var(--pink);
+}
+.close-calender span:not(.X) {
+    color: var(--pink);
+    opacity: .2;
+}
+p.button {
+    display: inline-block;
+    font-size: 1.3em;
+    z-index: 7;
+    top: 10px;
+    color: var(--pink);
+    left: 65px;
+}
+p.miusMonth {
+    left: 30px;
+}
+p.plusMonth {
+    left: 187px;
+}
+.month p span:nth-of-type(3) {
+    width: 30px;
+    margin-left: 125px;
+    font-family: title-bold;
+    font-size: 1.3em;
+    color: var(--pink);
+}
+.month p span:nth-of-type(2){
+    display: none;
+}
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 3px;
+}
+.days span.fade {
+    opacity: .5;
+}
+.date-filter a, .month {
+    grid-column: 1/-1;
+}
+.month {
+    top: -20px;
+}
+.day {
+    margin-top: .5em;
+    color: var(--pink);
+    opacity: .2;
+}
+.day.match {
+    color: var(--pink);
+    opacity: 1;
+}
+.match-day-clicked {
+    animation: loadEventOnDate 1s forwards ease-out;
+}
+@keyframes loadEventOnDate {
+    to {
+    opacity: 0;
+    }
+}
+.hint {
+    grid-column: 1/-1;
+    color: var(--pink);
+    font-size: .6em;
+    margin-top: 1em;
+}
+.loading-dots {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 2em;
+    overflow: hidden;
+    animation: loading-dots 4s steps(8) infinite;
+}
+@keyframes loading-dots {
+    from {
+        width: 0ch;
+    }
+    to {
+        width: 7ch;
+    }
+}

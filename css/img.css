@@ -1,0 +1,71 @@
+
+.bg-triangle {
+    position: fixed;
+}
+img.purple {
+    opacity: .83;
+    width: 59px;
+    top: 257px;
+    right: 5px;
+    z-index: 4;
+    transition: all .1s ease-out;
+}
+img.purple.big {
+    top: 170px;
+    opacity: .95;
+    width: 440px; /* cuz purple triangle is moved to the left a bit */
+}
+img.dark-green {
+    opacity: .95;
+    width: 85px;
+    z-index: 101;
+    top: 51px;
+    transition: all .1s ease-out;
+}
+img.dark-green.big {
+    opacity: 1;
+    width: 290px;
+}
+.corner-icon {
+    position: fixed;
+    width: 450px;
+    height: auto;
+    z-index: 3;
+    left: 2px;
+    bottom: 0;
+}
+.triangle {
+    width: 67%;
+    position: fixed;
+    top: -53px;
+}
+.logo-map {
+    position: fixed;
+    bottom: -7px;
+    width: 100%;
+}
+.logo-map img {
+    width: 100%;
+    bottom: -20px;
+}
+.event-type-icon {
+    float: right;
+    width: 37px;
+    top: -10px;
+}
+.featuredImg {
+    width: 93%;
+    height: auto;
+}
+.lang-icon {
+    height: .8em;
+    margin: 1em .2em 0 0;
+}
+.blockA {
+    font-size: .83em;
+}
+.location, .lang-icon {
+    width: 13px;
+    height: auto;
+    margin-right: 5px;
+}

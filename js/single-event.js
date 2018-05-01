@@ -21,8 +21,6 @@ function showSingleEvent(singleEvent){
         if (cfName == "major_type" && cfValue.indexOf(" ")>-1){ // display event type icon of this event, based on event type value
             cfValue = cfValue.replace(/\s+/g, '-');
             document.querySelector('img.' + cfValue).classList.remove('hide');
-        } else if (cfName == "major_type" && cfValue.indexOf(" ")<0){
-            document.querySelector('img.' + cfValue).classList.remove('hide');
         } else if(cfName == "title"){
             let p = document.createElement('p');
             p.classList.add('movieTitle');
