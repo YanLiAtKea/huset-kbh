@@ -297,32 +297,35 @@ for(let month = 1; month<13; month++){
         }
         document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(day);
     }
-        let hint = document.createElement('p');
-        hint.className = "hint";
-        hint.innerHTML = " * date in highlighted color has event(s) registered already";
-        document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(hint);
-//<p class='loading-dots'>. . . . . . .</p> checking the events
+    let hint = document.createElement('p');
+    hint.className = "hint";
+    hint.innerHTML = " * date in highlighted color has event(s) registered already";
+    document.querySelector('.month:nth-of-type(' + month + ') .days').appendChild(hint);
 }
-let gridStarts = [2];
-let NrOfDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // only working on this year, so no leap year considered
-let offsets = [];
-NrOfDaysInEachMonth.forEach(getOffset);
-function getOffset(nD){
-    offsets.push(nD%7);
-}
-console.log("offsets: " +offsets);
-for(let i = 0; i<12; i++){
-    if(gridStarts[i] + offsets[i]<=7){
-        gridStarts.push(gridStarts[i] + offsets[i]);
-    } else {
-        gridStarts.push(gridStarts[i] + offsets[i] - 7);
+
+// assign days of the week
+auto();
+function auto(){
+    let gridStarts = [2];
+    let NrOfDaysInEachMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // only working on this year, so no leap year considered
+    let offsets = [];
+    NrOfDaysInEachMonth.forEach(getOffset);
+    function getOffset(nD){
+        offsets.push(nD%7);
+    }
+    for(let i = 0; i<12; i++){
+        if(gridStarts[i] + offsets[i]<=7){
+            gridStarts.push(gridStarts[i] + offsets[i]);
+        } else {
+            gridStarts.push(gridStarts[i] + offsets[i] - 7);
+        }
+    }
+    let monthsToAssign = document.querySelectorAll('.days .day:nth-of-type(1)');
+    for(i=1; i<12; i++){
+        monthsToAssign[i].style.gridColumnStart = gridStarts[i];
     }
 }
-let monthsToAssign = document.querySelectorAll('.days .day:nth-of-type(1)');
-for(i=1; i<12; i++){
-    monthsToAssign[i].style.gridColumnStart = gridStarts[i];
-}
-console.log("grid starts: " +gridStarts);
+
 
 // for the defalt shown month, a loading event animation need to be shown, in case filter events on dates takes too long
 document.querySelector('.month:not(.hide) .hint').innerHTML = "<p class='loading-dots'>. . . . . . .</p> checking the events";
