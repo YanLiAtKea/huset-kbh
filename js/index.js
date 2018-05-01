@@ -98,18 +98,19 @@ let urlParams = new URLSearchParams(window.location.search);
 
 loadList();
 function loadList(){
+    document.querySelector('.current-type').textContent = "...";
     lookingForData = true;
     let categoryId = urlParams.get("category");
     let fetchLink = "https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=3&page=" + pageNr;
     if (categoryId){
         fetchLink += "&categories=" + categoryId;
-        document.querySelector('.current-type').textContent = "...";
     }
     fetch(fetchLink)
         .then(e=>e.json())
         .then(listAllEventsInPages);
 }
 function listAllEventsInPages(allEvents){
+    updateCurrentType();
     // ??? don't know how to get "X-WP-Total" of post count, so can't calculate when there is no more post to display. Use this as temperary solution, but this still gives one error
     if(!allEvents.length){ // as set above, length should usually be 3
         clearInterval(checkBottom);
@@ -236,9 +237,9 @@ clickOnSingleEvent();
 /////////// load next page of posts when reaching the bottom of the page
 let checkBottom = setInterval(function(){
   if(bottomVisible() && lookingForData===false){
-      console.log('load next page');
-    pageNr++;
-    loadList();
+      updateCurrentType;
+      pageNr++;
+      loadList();
   }
 }, 700)
 function bottomVisible() {
