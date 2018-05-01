@@ -43,7 +43,7 @@ img.dark-green {
     transition: all .1s ease-out;
 }
 img.dark-green.big {
-    width: 280px;
+    width: 290px;
 }
 img.pink {
     width: 100px;
@@ -90,8 +90,8 @@ aside.narrow {
 }
 aside.tilt {
     width: 330px;
-    transform: rotate(-45deg) translateX(-217px) translateY(30px);
-    transform-origin: 10% 33%;
+    transform: rotate(-45deg) translateX(-230px) translateY(30px);
+    transform-origin: 5% 33%;
     overflow: visible;
 
 }
