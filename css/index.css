@@ -52,12 +52,6 @@ img.dark-green {
 img.dark-green.big {
     width: 290px;
 }
-img.pink {
-    width: 100px;
-    z-index: 102;
-    right: 0;
-    top: 71vh;
-}
 .corner-icon {
     position: fixed;
     width: 450px;
@@ -326,7 +320,7 @@ p.plusMonth {
     padding-bottom: 30vh; /* so the list won't cover the logo area and test of visiblebottom function still works */
 }
 .eventList h1 {
-    font-size: 1.1em;
+    font-size: 1em;
     font-family: title-bold;
     overflow: hidden;
     background: white;
