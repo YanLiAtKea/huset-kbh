@@ -36,12 +36,12 @@ img.purple {
     top: 287px;
     right: 5px;
     z-index: 4;
+    transition: all .1s ease-out;
 }
 img.purple.big {
     top: 210px;
     opacity: .95;
     width: 440px; /* cuz purple triangle is moved to the left a bit */
-    transition: all .1s ease-out;
 }
 img.dark-green {
     width: 97px;
@@ -220,7 +220,7 @@ main {
 .date-filter {
     z-index: 12;
     width: 230px;
-    left: 67px;
+    left: 65px;
     top: -53px;
     /*margin: 40px 0 0 0;  keep close calendar button and open calender button at similar location on screen for better user experience. can't assure same location as "by Date" will move depending on which category is sellected */
 }

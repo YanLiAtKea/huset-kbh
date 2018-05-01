@@ -271,13 +271,13 @@ function bottomVisible() {
 /////////// click on "by type" ///////////
 document.querySelector('.by-type').addEventListener('click', showCategoryList);
 function showCategoryList(){
-
     document.querySelector('.current-type').classList.add('hide');
     document.querySelector('img.dark-green').classList.add('big');
     document.querySelector('.type-filter').classList.add('expand-type-filter');
     document.querySelector('aside').classList.remove('narrow');
     document.querySelector('aside').classList.add('tilt');
     document.querySelector('.type-filter').classList.remove('hide');
+    closeDateFilter();
 }
 
 /////////// click on "close by type" ///////////
