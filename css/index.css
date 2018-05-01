@@ -44,9 +44,9 @@ img.purple.big {
     width: 440px; /* cuz purple triangle is moved to the left a bit */
 }
 img.dark-green {
-    width: 97px;
+    width: 85px;
     z-index: 101;
-    top: 80px;
+    top: 91px;
     transition: all .1s ease-out;
 }
 img.dark-green.big {
@@ -84,7 +84,7 @@ body {
 aside {
     z-index: 102;
     position: fixed;
-    left: 0;
+    left: -3px;
     top: 110px;
     padding: 10px;
     overflow-y: scroll;
@@ -109,7 +109,7 @@ aside.expand {
     z-index: 1;
     padding: 30px 0 30px 30px;
 }
-aside>p, .calendar>p {
+aside>p:not(.current-type), .calendar>p {
     margin: 1.5em 0 1em;
     font-size: .7em;
     color: var(--white);
@@ -338,7 +338,7 @@ p.plusMonth {
 }
 .singleEvent, .singleEventOnDate {
     width: 75vw;
-    padding: 30px 10px 30px 25px;
+    padding: 0px 10px 30px 25px;
 }
 /*
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {

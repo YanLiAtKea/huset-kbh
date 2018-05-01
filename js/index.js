@@ -268,7 +268,7 @@ function bottomVisible() {
   return bottomOfPage || pageHeight < visible
 }
 
-/////////// click on "by type" ///////////
+/////////// click to expand "by type" ///////////
 document.querySelector('.by-type').addEventListener('click', showCategoryList);
 function showCategoryList(){
     document.querySelector('.current-type').classList.add('hide');
@@ -283,6 +283,7 @@ function showCategoryList(){
 /////////// click on "close by type" ///////////
 document.querySelector('.close-by-type').addEventListener('click', closeTypeFilter);
 function closeTypeFilter(){
+    document.querySelector('.current-type').classList.remove('hide');
     document.querySelector('img.dark-green').classList.remove('big');
     document.querySelector('.type-filter').classList.remove('expand-type-filter');
     document.querySelector('aside').classList.remove('tilt');
