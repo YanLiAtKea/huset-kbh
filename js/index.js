@@ -52,19 +52,8 @@ function getMajorTypes(allCategories){
             }
         }
     }
+    getGenreFilter();
 }
-function updateCurrentType(){
-    document.querySelector('.current-type').textContent = document.querySelector('.chosen p').textContent;
-    document.querySelector('aside').classList.add('narrow');
-}
-
-/////////// load event list in pages///////////
-let template = document.querySelector("template.singleEvent").content;
-let eventList = document.querySelector(".eventList");
-let lookingForData = false;
-let pageNr = 1;
-let urlParams = new URLSearchParams(window.location.search);
-getGenreFilter();
 function getGenreFilter(){
     let categoryId = urlParams.get("category");
     let fetchLink = "https://onestepfurther.nu/cms/wp-json/wp/v2/posts/?_embed&categories=" + categoryId;
@@ -94,6 +83,19 @@ function getGenreFilter(){
         document.querySelector('.chosen').parentElement.appendChild(genreLine);
     }
 }
+
+function updateCurrentType(){
+    document.querySelector('.current-type').textContent = document.querySelector('.chosen p').textContent;
+    document.querySelector('aside').classList.add('narrow');
+}
+
+/////////// load event list in pages///////////
+let template = document.querySelector("template.singleEvent").content;
+let eventList = document.querySelector(".eventList");
+let lookingForData = false;
+let pageNr = 1;
+let urlParams = new URLSearchParams(window.location.search);
+
 loadList();
 function loadList(){
     lookingForData = true;
@@ -101,6 +103,7 @@ function loadList(){
     let fetchLink = "https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=3&page=" + pageNr;
     if (categoryId){
         fetchLink += "&categories=" + categoryId;
+        document.querySelector('.current-type').textContent = "...";
     }
     fetch(fetchLink)
         .then(e=>e.json())
