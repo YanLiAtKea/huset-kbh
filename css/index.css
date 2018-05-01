@@ -33,13 +33,14 @@
 img.purple {
     width: 67px;
     z-index: 100;
-    top: 223px;
+    top: 273px;
+    right: 10px;
 }
 img.dark-green {
     width: 97px;
     z-index: 101;
-    top: 90px;
-    transition: all .3s ease-out;
+    top: 80px;
+    transition: all .1s ease-out;
 }
 img.dark-green.big {
     width: 280px;
@@ -52,10 +53,11 @@ img.pink {
 }
 .corner-icon {
     position: fixed;
-    width: 50px;
+    width: 450px;
     height: auto;
-    top: 10px;
-    left: 10px;
+    z-index: 3;
+    left: 2px;
+    bottom: 0;
 }
 ul {
     list-style-type: none;
@@ -77,15 +79,18 @@ aside {
     position: fixed;
     left: 0;
     top: 110px;
-    width: 330px;
     padding: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
     transition: all 3s ease-out;
     transition: height .0001s;
 }
+aside.narrow {
+    width: 90px;
+}
 aside.tilt {
-    transform: rotate(-45deg) translateX(-213px) translateY(30px);
+    width: 330px;
+    transform: rotate(-45deg) translateX(-217px) translateY(30px);
     transform-origin: 10% 33%;
     overflow: visible;
 
@@ -106,6 +111,11 @@ aside>p {
 .by-type {
     color: var(--white);
 }
+.current-type {
+    font-size: .8em;
+    color: var(--white);
+    opacity: .7;
+}
 aside.tilt .by-type {
     text-align: right;
     text-decoration: underline;
@@ -117,6 +127,13 @@ aside.tilt .close-by-type {
     display: inherit;
     text-align: right;
     font-size: 1.1em;
+}
+.type-filter {
+    height: 0;
+    transition: height .2s .1s ease-out;
+}
+.type-filter.expand-type-filter {
+    height: auto;
 }
 .type-filter a {
     text-decoration: none;
@@ -137,11 +154,12 @@ a.chosen p {
 .genre-line {
     text-align: right;
 }
-.genre-sub {
+.type-filter .genre-sub {
     font-size: .7em;
     color: var(--light-green);
     display: inline-block;
     margin-left: 1em;
+    text-decoration: underline;
 }
 .type-icon {
     width: 40px;

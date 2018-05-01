@@ -9,15 +9,17 @@
 <body>
     <img class="bg-triangle dark-green" src="img/dark-green.png" alt="background image with color">
     <img class="bg-triangle purple" src="img/purple_stroke.png" alt="background image with color">
-    <img class="corner-icon" src="img/corner-icon_100.png" alt="cornor icon">
+    <img class="corner-icon" src="img/corner-icon_hori_400.jpg" alt="cornor icon">
     <aside>
        <img class="corner-icon-pink hide" src="img/corner-icon_pink_200.png" alt="cornor icon">
         <p class="close-by-type">X</p>
         <p class="by-type">SEARCH<br> by TYPE:</p>
+        <p class="current-type">all types</p>
         <ul class="type-filter hide">
             <li class="all-types"><a class="chosen" href="index.html"><p>all events</p></a></li>
         </ul>
-        <p class="or">or</p>
+    </aside>
+    <div class="calender">
         <p class="by-date">by DATE</p>
         <div class="date-filter hide">
             <p class="close-calender"><span class="X">⤫</span><span> &nbsp;&nbsp;&nbsp;close calender</span></p>
@@ -73,7 +75,8 @@
             </div>
             <br>
         </div>
-    </aside>
+
+    </div>
     <main>
        <img class="triangle" src="img/triangle_300.png" alt="background image element">
        <div class="eventList"></div>
@@ -96,8 +99,10 @@
 
     </main>
     <section class="logo-map">
-        <a href="https://www.google.dk/maps/place/Huset-KBH/@55.6763715,12.5725261,17z/data=!3m1!4b1!4m5!3m4!1s0x4652531164a3fb89:0xdb78617809263eb5!8m2!3d55.6763715!4d12.5747148" target="_blank"><img src="img/huset-logo_700x291.jpg" alt="huset's logo">
-        <img class="map" src="img/map.png" alt="huset's map location"></a>
+        <a href="https://www.google.dk/maps/place/Huset-KBH/@55.6763715,12.5725261,17z/data=!3m1!4b1!4m5!3m4!1s0x4652531164a3fb89:0xdb78617809263eb5!8m2!3d55.6763715!4d12.5747148" target="_blank">
+<!--            <img src="img/huset-logo_700x291.jpg" alt="huset's logo"> -->
+            <img class="map" src="img/map.png" alt="huset's map location">
+        </a>
     </section>
     <script src="js/index.js"></script>
 </body>

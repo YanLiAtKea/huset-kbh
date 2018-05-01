@@ -1,3 +1,8 @@
+function updateCurrentType(){
+    document.querySelector('.current-type').textContent = document.querySelector('.chosen p').textContent;
+    document.querySelector('aside').classList.add('narrow');
+}
+
 /////////// build main filter of major category and the sub-categories/tags on the left ///////////
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/categories")
     .then(e=>e.json())
@@ -47,6 +52,7 @@ function getMajorTypes(allCategories){
         for(let i=0; i<cateArray.length; i++){
             if(cateId == cateArray[i]){
                 allTypes[i].classList.add('chosen');
+                updateCurrentType();
 //                allTypeIcons[i].classList.remove('hide');
             }
         }
@@ -265,7 +271,10 @@ function bottomVisible() {
 /////////// click on "by type" ///////////
 document.querySelector('.by-type').addEventListener('click', showCategoryList);
 function showCategoryList(){
+    document.querySelector('.current-type').classList.add('hide');
     document.querySelector('img.dark-green').classList.add('big');
+    document.querySelector('.type-filter').classList.add('expand-type-filter');
+    document.querySelector('aside').classList.remove('narrow');
     document.querySelector('aside').classList.add('tilt');
     document.querySelector('.type-filter').classList.remove('hide');
 }
@@ -274,7 +283,9 @@ function showCategoryList(){
 document.querySelector('.close-by-type').addEventListener('click', hideCategoryList);
 function hideCategoryList(){
     document.querySelector('img.dark-green').classList.remove('big');
+    document.querySelector('.type-filter').classList.remove('expand-type-filter');
     document.querySelector('aside').classList.remove('tilt');
+    document.querySelector('aside').classList.add('narrow');
     document.querySelector('.type-filter').classList.add('hide');
 }
 
