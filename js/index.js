@@ -453,6 +453,7 @@ function clickOnDay(d){
                     document.querySelector('.genre-line').remove(); // inside there could be a line of genre, need to be removed as well.
                 }
             }
+            window.scrollTo(0,0); // because a filter by date still runs on the same page, if the page was already scrolled to the middle, this scrolling down also affects the date search result, user might not realise that they are reading from the middle of the page
             document.querySelector('.triangle').setAttribute('src', "img/triangle_purple_300.png");
             document.querySelector('.month:not(.hide) .hint').textContent = " * date in highlighted color has event(s) registered already";     // whenever a day is clicked, reset hint to this
             document.querySelectorAll('.singleEvent').forEach(function(e){e.classList.add('match-day-clicked')});
