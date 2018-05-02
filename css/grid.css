@@ -1,0 +1,9 @@
+.singleEvent {
+    display: grid;
+}
+.price {
+    grid-row-start: 5;
+}
+.buy_ticket {
+    grid-row-start: 6;
+}

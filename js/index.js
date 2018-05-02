@@ -633,10 +633,3 @@ function clickOnSingleEvent(){
         }
     }
 }
-
-
-
-
-
-
-

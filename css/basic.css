@@ -39,7 +39,7 @@ a {
 }
 body {
     display: grid;
-    grid-template-columns: 2fr 7fr;
+    grid-template-columns: 1fr 4fr;
     font-family: text-medium;
 }
 
@@ -47,7 +47,7 @@ main {
     grid-column-start: 2;
     overflow: hidden;
 }
-.singleEvent .red {
+p.red {
     color: var(--red);
     font-size: .67em;
 }
@@ -69,16 +69,16 @@ h1 {
 .eventList p {
     font-size: .9em;
 }
-.eventList h2, .eventList img:not(.featuredImg) {
+h2, .eventList img:not(.featuredImg) {
     display: inline-block;
     font-family: title-bold;
     font-size: 13px;
 }
-.eventList h2 {
+h2 {
     border-top: 2px solid var(--black);
 }
 .singleEvent, .singleEventOnDate {
-    width: 75vw;
+    width: 90%;
     padding: 10px 10px 20px 25px;
 }
 /*
@@ -111,4 +111,22 @@ a.inline {
 }
 .d0101 {
     grid-column-start: 2;
+}
+.quick-view {
+    height: 13.3em;
+    overflow: hidden;
+}
+.long {
+    height: auto;
+}
+.rm {
+    font-size: .9em;
+    margin-bottom: 1em;
+}
+.singleEvent p {
+    font-family: text-medium;
+    font-size: .9em;
+}
+.singleEvent .normal-text {
+    font-size: 1em;
 }
