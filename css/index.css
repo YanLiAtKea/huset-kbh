@@ -33,15 +33,15 @@
 img.purple {
     opacity: .83;
     width: 59px;
-    top: 257px;
+    top: 217px;
     right: 5px;
     z-index: 4;
     transition: all .1s ease-out;
 }
 img.purple.big {
-    top: 170px;
+    top: 160px;
     opacity: .95;
-    width: 440px; /* cuz purple triangle is moved to the left a bit */
+    width: 400px;
 }
 img.dark-green {
     opacity: .95;
@@ -56,9 +56,10 @@ img.dark-green.big {
 }
 .corner-icon {
     position: fixed;
-    width: 450px;
+    width: 100vw;
+    max-width: 450px;
     height: auto;
-    z-index: 3;
+    z-index: 2;
     left: 2px;
     bottom: 0;
 }
@@ -74,7 +75,7 @@ a {
 }
 body {
     display: grid;
-    grid-template-columns: 2fr 7fr;
+    grid-template-columns: 1fr 4fr;
     font-family: text-medium;
 }
 aside {
@@ -179,12 +180,12 @@ a.chosen p {
     z-index: 4;
     position: fixed;
     right: 5px;
-    top: 280px;
+    top: 240px;
 }
 .calendar.expand {
     width: 300px;
     z-index: 11;
-    top: 380px;
+    top: 340px;
 
 }
 .calendar .by-date {
@@ -198,7 +199,7 @@ main {
     overflow: hidden;
 }
 .triangle {
-    width: 67%;
+    width: 70%;
     position: fixed;
     top: -53px;
 }
@@ -206,10 +207,7 @@ main {
     position: fixed;
     bottom: -7px;
     width: 100%;
-}
-.logo-map img {
-    width: 100%;
-    bottom: -20px;
+    z-index: 3;
 }
 .date-filter {
     z-index: 12;
@@ -222,6 +220,7 @@ main {
     text-align: right;
     font-size: .7em;
     padding-right: 11px;
+    margin-bottom: 1em;
 }
 .close-calender span.X {
     font-size: 1.3em;
@@ -338,7 +337,7 @@ p.plusMonth {
     border-top: 2px solid var(--black);
 }
 .singleEvent, .singleEventOnDate {
-    width: 75vw;
+    width: 90%;
     padding: 10px 10px 20px 25px;
 }
 /*
@@ -351,7 +350,7 @@ p.plusMonth {
     top: -10px;
 }
 .featuredImg {
-    width: 93%;
+    width: 95%;
     height: auto;
 }
 .cfP {

@@ -97,7 +97,7 @@ let urlParams = new URLSearchParams(window.location.search);
 
 loadList();
 function loadList(){
-    document.querySelector('.current-type').textContent = "...";
+    document.querySelector('.current-type').textContent = "loading ...";
     lookingForData = true;
     let categoryId = urlParams.get("category");
     let fetchLink = "https://onestepfurther.nu/cms/wp-json/wp/v2/posts?_embed&per_page=3&page=" + pageNr;
@@ -109,6 +109,7 @@ function loadList(){
         .then(listAllEventsInPages);
 }
 function listAllEventsInPages(allEvents){
+    document.querySelector('.animation-item.t3').classList.remove('turn');
     updateCurrentType();
     // ??? don't know how to get "X-WP-Total" of post count, so can't calculate when there is no more post to display. Use this as temperary solution, but this still gives one error
     if(!allEvents.length){ // as set above, length should usually be 3
@@ -230,8 +231,10 @@ function showSingleEvent(singleEvent){
         }
         eventList.appendChild(clone);
     }
-clickOnSingleEvent();
+
+    clickOnSingleEvent();
 }
+
 
 /////////// load next page of posts when reaching the bottom of the page
 let checkBottom = setInterval(function(){
@@ -618,7 +621,6 @@ function clickOnDay(d){
         }
     }
 }
-
 /////////// click on individual post ///////////
 function clickOnSingleEvent(){
     let allSingleEvents = document.querySelectorAll('.singleEvent');
@@ -632,3 +634,10 @@ function clickOnSingleEvent(){
         }
     }
 }
+
+
+
+
+
+
+
