@@ -355,7 +355,7 @@ p.plusMonth {
 }
 .cfP {
     text-transform: uppercase;
-    padding-top: 1em; /* use padding instead of margin to eliminate the gaps between these elements, which will "cut through" the green triangel way too many times */
+    padding-top: .7em;
 }
 .lang-icon {
     height: .8em;

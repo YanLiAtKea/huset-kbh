@@ -109,7 +109,6 @@ function loadList(){
         .then(listAllEventsInPages);
 }
 function listAllEventsInPages(allEvents){
-    document.querySelector('.animation-item.t3').classList.remove('turn');
     updateCurrentType();
     // ??? don't know how to get "X-WP-Total" of post count, so can't calculate when there is no more post to display. Use this as temperary solution, but this still gives one error
     if(!allEvents.length){ // as set above, length should usually be 3
