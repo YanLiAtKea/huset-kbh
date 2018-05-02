@@ -1,3 +1,24 @@
+if(window.location.href.indexOf('category')<0){
+    showLoadingAnimation();
+}
+function showLoadingAnimation(){
+    document.querySelector('main').classList.add('hide-main');
+    document.querySelector('.verti-icon').classList.remove('hide');
+    document.querySelector('.dark-green').classList.add('load');
+    document.querySelector('.purple').classList.add('load');
+    document.querySelector('.pink').classList.add('load');
+    document.querySelector('.tri').classList.remove('hide')
+}
+
+function endLoadingAnimation(){
+    document.querySelector('.verti-icon').classList.add('hide');
+    document.querySelector('.dark-green').classList.remove('load');
+    document.querySelector('.purple').classList.remove('load');
+    document.querySelector('.pink').classList.remove('load');
+    setTimeout(function(){ document.querySelector('.tri').classList.add('hide');}, 100);
+    setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
+    }, 100);
+}
 /////////// build main filter of major category and the sub-categories/tags on the left ///////////
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/categories")
     .then(e=>e.json())
@@ -109,6 +130,9 @@ function loadList(){
         .then(listAllEventsInPages);
 }
 function listAllEventsInPages(allEvents){
+    if(window.location.href.indexOf('category')<0){
+        endLoadingAnimation();
+    }
     updateCurrentType();
     // ??? don't know how to get "X-WP-Total" of post count, so can't calculate when there is no more post to display. Use this as temperary solution, but this still gives one error
     if(!allEvents.length){ // as set above, length should usually be 3

@@ -1,4 +1,45 @@
-
+.tri {
+    transform-origin: center right;
+    animation: flash 2s infinite ease-out;
+    position: fixed;
+    top: 460px;
+    left: 30px;
+}
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+img.purple.load {
+    top: 160px;
+    opacity: .9;
+    width: 290px;
+}
+img.dark-green.load {
+    top: 160px;
+    opacity: .9;
+    width: 160px;
+}
+img.pink.load {
+    top: 480px;
+    left: 80px;
+    width: 94px;
+}
+img.pink {
+    bottom: 0;
+    z-index: 3;
+    width: 54px;
+    left: 114px;
+    transition: all .1s ease-out;
+}
+.verti-icon {
+    position: fixed;
+    left: 50vw;
+    top: 20px;
+}
 .bg-triangle {
     position: fixed;
 }

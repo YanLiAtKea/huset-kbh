@@ -30,6 +30,12 @@
 .bg-triangle {
     position: fixed;
 }
+img.pink.down {
+    bottom: 0;
+    left: 113px;
+    z-index: 3;
+    width: 56px;
+}
 img.purple {
     opacity: .83;
     width: 59px;
@@ -193,6 +199,9 @@ a.chosen p {
     z-index: 7;
     color: var(--purple);
     transform: translate(5px) rotate(-90deg);
+}
+main.hide-main {
+    opacity: 0;
 }
 main {
     grid-column-start: 2;
