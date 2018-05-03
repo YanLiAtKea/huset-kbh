@@ -378,9 +378,6 @@ h2 {
     height: auto;
     margin-right: 5px;
 }
-.lang-icon.wrong {
-    margin-left: 23px; /* temp solution */
-}
 span.lang {
     font-size: .8em;
 }

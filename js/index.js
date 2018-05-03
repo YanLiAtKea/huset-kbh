@@ -220,18 +220,19 @@ function showSingleEvent(singleEvent){
                     let langSpan = document.createElement('span');
                     langSpan.className = "lang normal-text";
                     let langImg = document.createElement('img');
-                    langImg.classList.add('wrong');
                     langImg.setAttribute('src', "img/lang-icon_50.png");
                     langImg.setAttribute('alt', "langIcon");
                     langImg.classList.add('lang-icon');
                     clone.appendChild(langImg);
-                    clone.appendChild(langSpan);
-                    langSpan.textContent
                     for (let i=0; i<cfValue.length; i++){
                         langSpan.textContent += cfValue[i];
                         langSpan.textContent += " ";
                     }
-                    clone.querySelector('span.lang').textContent = clone.querySelector('span.lang').textContent.replace(/\s+/g, ' / ').slice(0, -2); // remove the last /
+                    clone.querySelector('span.lang').textContent = clone.querySelector('span.lang').textContent.replace(/\s+/g, ' / ').slice(0, -2); // remove the last '/'
+                    let span = document.createElement('span');
+                    span.textContent = clone.querySelector('span.lang').textContent;
+                    clone.querySelector('.singleEvent').appendChild(langImg);
+                    clone.querySelector('.singleEvent').appendChild(span);
                 } else if(cf == "language" && cfValue.length ==1 ){
                     let langSpan = document.createElement('span');
                     langSpan.className = "lang";
