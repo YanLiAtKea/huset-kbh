@@ -9,6 +9,7 @@ if(firstLoad == true && window.location.href.indexOf('category') < 0){
 }
 function showLoadingAnimation(){
     console.log('show animation');
+    document.querySelector('.verti-icon').classList.remove('hide');
     document.querySelector('main').classList.add('hide-main');
     document.querySelector('.by-type').classList.add('hide');
     document.querySelector('.by-date').classList.add('hide');
@@ -21,9 +22,15 @@ function showLoadingAnimation(){
 function endLoadingAnimation(){
     console.log('end animation');
     firstLoad = false;
-    setTimeout(hideAni, 1700);
-    function hideAni(){
+    let hideAniTimeout1 = setTimeout(hideAni1, 1450);
+    function hideAni1(){
         document.querySelector('.verti-icon').classList.add('hide');
+        document.querySelector('.tri').classList.add('hide');
+    }
+    setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
+    }, 1500);
+    let hideAniTimmeout2 = setTimeout(hideAni2, 1700);
+    function hideAni2(){
         document.querySelector('.dark-green').classList.remove('load');
         document.querySelector('.purple').classList.remove('load');
         document.querySelector('.pink').classList.remove('load');
@@ -31,10 +38,8 @@ function endLoadingAnimation(){
         document.querySelector('.by-date').classList.remove('hide');
         document.querySelector('.current-type').classList.remove('hide');
         document.querySelector('.by-date').classList.remove('hide');
-        document.querySelector('.tri').classList.add('hide');
+        clearTimeout(hideAniTimmeout2);
     }
-    setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
-    }, 1500);
 }
 
 
