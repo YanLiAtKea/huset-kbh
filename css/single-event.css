@@ -2,8 +2,8 @@
     width: 100%;
 }
 .singleEventPage {
-    width: 91%;
-    padding: 2em 0 60vw;
+    width: 95%;
+    padding: 2em 0 50vw;
     display: grid;
     grid-template-columns: 7fr 3fr;
 }
@@ -27,7 +27,7 @@
 .description {
     font-size: .9em;
 }
-.genre p, .release_year p, .title p, .director p, .player p, .related-event p {
+.genre p, .release_year p, .title p, .director p {
     font-size: .7em;
 }
 .d3 {
