@@ -45,7 +45,7 @@ img.purple {
     transition: all .1s ease-out;
 }
 img.purple.big {
-    top: 160px;
+    top: 130px;
     opacity: .95;
     width: 400px;
 }
@@ -58,7 +58,7 @@ img.dark-green {
 }
 img.dark-green.big {
     opacity: 1;
-    width: 290px;
+    width: 340px;
 }
 .corner-icon {
     position: fixed;
@@ -150,9 +150,9 @@ aside.tilt .close-by-type {
     z-index: 2;
 }
 .type-filter li a.chosen, a.chosen p {
-/*    text-decoration: underline;*/
+    text-decoration: underline;
     color: var(--light-green);
-    font-size: 1.2em;
+    font-size: 1.3em;
     line-height: 1em;
 }
 a.chosen p {
@@ -162,7 +162,7 @@ a.chosen p {
     text-align: right;
 }
 .type-filter .genre-sub {
-    font-size: .7em;
+    font-size: .9em;
     color: var(--light-green);
     display: inline-block;
     margin-left: 1em;
@@ -179,7 +179,7 @@ a.chosen p {
 .major-category p, .all-types a {
     color: var(--light-green);
     text-align: right;
-    font-size: .9em;
+    font-size: 1.3em;
     line-height: 1em;
 }
 .calendar {
@@ -191,7 +191,7 @@ a.chosen p {
 .calendar.expand {
     width: 300px;
     z-index: 11;
-    top: 340px;
+    top: 320px;
 
 }
 .calendar .by-date {
@@ -346,8 +346,22 @@ h2 {
     border-top: 2px solid var(--black);
 }
 .singleEvent, .singleEventOnDate {
+    height: 0;
+    overflow: hidden;
+
     width: 90%;
     padding: 10px 10px 20px 25px;
+}
+.singleEvent.pull-down, .singleEventOnDate.pull-down {
+    animation: pullDown 3s forwards ease-out;
+}
+@keyframes pullDown {
+    from {
+        height: 0;
+    }
+    to {
+        height: auto;
+    }
 }
 /*
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {

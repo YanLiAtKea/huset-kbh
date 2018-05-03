@@ -4,7 +4,6 @@ if(firstLoad == true && window.location.href.indexOf('category') < 0){
     console.log('show ani');
     showLoadingAnimation();
 } else {
-    console.log('no ani');
     endLoadingAnimation();
 }
 function showLoadingAnimation(){
@@ -20,7 +19,6 @@ function showLoadingAnimation(){
 }
 
 function endLoadingAnimation(){
-    console.log('end animation');
     firstLoad = false;
     let hideAniTimeout1 = setTimeout(hideAni1, 1450);
     function hideAni1(){
@@ -277,6 +275,7 @@ function showSingleEvent(singleEvent){
             }
         }
         eventList.appendChild(clone);
+        document.querySelector('.singleEvent:last-of-type').classList.add('pull-down');
     }
 
     clickOnSingleEvent();
