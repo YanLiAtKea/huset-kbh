@@ -6,7 +6,8 @@ fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts/" + id + "?_embed")
 
 function updateEventList(e){
 
-    // overwrite current eventlist with matched event(s)
+    document.title = e.title.rendered + '| Huset-KBH'; // for SEO
+
     let clone2 = document.querySelector('.singleEventPage');
     clone2.querySelector('h2').innerHTML = e.acf["major_type"]; // use innerHTML cuz title include html entities and tags
     clone2.querySelector('h1').innerHTML = e.title.rendered;

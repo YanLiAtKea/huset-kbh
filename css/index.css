@@ -346,22 +346,11 @@ h2 {
     border-top: 2px solid var(--black);
 }
 .singleEvent, .singleEventOnDate {
-    height: 0;
+    height: auto;
     overflow: hidden;
 
     width: 90%;
     padding: 10px 10px 20px 25px;
-}
-.singleEvent.pull-down, .singleEventOnDate.pull-down {
-    animation: pullDown 3s forwards ease-out;
-}
-@keyframes pullDown {
-    from {
-        height: 0;
-    }
-    to {
-        height: auto;
-    }
 }
 /*
 .singleEvent p, .singleEventOnDate p, .singleEvent h1, .singleEventOnDate h1 {

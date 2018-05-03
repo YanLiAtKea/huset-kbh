@@ -3,9 +3,10 @@
 }
 .singleEventPage {
     width: 95%;
-    padding: 2em 0 50vw;
+    padding: 2em 5px 250px 0;
     display: grid;
-    grid-template-columns: 7fr 3fr;
+    grid-template-columns: 7fr 4fr;
+    grid-column-gap: 7px;
 }
 .singleEventPage * {
     grid-column: 1/-1;
@@ -27,8 +28,11 @@
 .description {
     font-size: .9em;
 }
-.genre p, .release_year p, .title p, .director p {
+.genre p, .release_year p, .title p, .director p, .player p {
     font-size: .7em;
+}
+.related-event {
+    font-size: .8em;
 }
 .d3 {
     position: fixed;

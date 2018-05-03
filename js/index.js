@@ -275,7 +275,6 @@ function showSingleEvent(singleEvent){
             }
         }
         eventList.appendChild(clone);
-        document.querySelector('.singleEvent:last-of-type').classList.add('pull-down');
     }
 
     clickOnSingleEvent();
