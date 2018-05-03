@@ -7,7 +7,6 @@ function showLoadingAnimation(){
     document.querySelector('main').classList.add('hide-main');
     document.querySelector('.by-type').classList.add('hide');
     document.querySelector('.by-date').classList.add('hide');
-    document.querySelector('.verti-icon').classList.remove('hide');
     document.querySelector('.dark-green').classList.add('load');
     document.querySelector('.purple').classList.add('load');
     document.querySelector('.pink').classList.add('load');
@@ -21,6 +20,8 @@ function endLoadingAnimation(){
     document.querySelector('.purple').classList.remove('load');
     document.querySelector('img.pink').classList.remove('load');
     setTimeout(function(){ document.querySelector('.by-type').classList.remove('hide');}, 150);
+    setTimeout(function(){ document.querySelector('.by-date').classList.remove('hide');}, 150);
+    setTimeout(function(){ document.querySelector('.current-type').classList.remove('hide');}, 150);
     setTimeout(function(){ document.querySelector('.by-date').classList.remove('hide'); }, 150);
     setTimeout(function(){ document.querySelector('.tri').classList.add('hide');}, 100);
     setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
