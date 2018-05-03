@@ -1,8 +1,11 @@
-if(window.location.href.indexOf('category')<0){
+let firstLoad = true;
+if(firstLoad == true && window.location.href.indexOf('category') < 0){
     showLoadingAnimation();
 }
 function showLoadingAnimation(){
     document.querySelector('main').classList.add('hide-main');
+    document.querySelector('.by-type').classList.add('hide');
+    document.querySelector('.by-date').classList.add('hide');
     document.querySelector('.verti-icon').classList.remove('hide');
     document.querySelector('.dark-green').classList.add('load');
     document.querySelector('.purple').classList.add('load');
@@ -14,10 +17,13 @@ function endLoadingAnimation(){
     document.querySelector('.verti-icon').classList.add('hide');
     document.querySelector('.dark-green').classList.remove('load');
     document.querySelector('.purple').classList.remove('load');
-    document.querySelector('.pink').classList.remove('load');
+    document.querySelector('img.pink').classList.remove('load');
+    setTimeout(function(){ document.querySelector('.by-type').classList.remove('hide');}, 150);
+    setTimeout(function(){ document.querySelector('.by-date').classList.remove('hide'); }, 150);
     setTimeout(function(){ document.querySelector('.tri').classList.add('hide');}, 100);
     setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
     }, 100);
+    firstLoad = false;
 }
 /////////// build main filter of major category and the sub-categories/tags on the left ///////////
 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/categories")
@@ -196,7 +202,7 @@ function showSingleEvent(singleEvent){
                         p.textContent = cfValue;
                     }
                 } else if(cf == "language" && cfValue.length>1){
-                    let langSpan = document.createElement('span');
+/*                    let langSpan = document.createElement('span');
                     langSpan.className = "lang";
                     let langImg = document.createElement('img');
                     langImg.setAttribute('src', "img/lang-icon_50.png");
@@ -209,7 +215,23 @@ function showSingleEvent(singleEvent){
                         clone.querySelector('.singleEvent').appendChild(langSpan);
                         clone.querySelector('.singleEvent span.lang').appendChild(span);
                     }
-                    clone.querySelector('.singleEvent span.lang').textContent = clone.querySelector('.singleEvent span.lang').textContent.replace(/\s+/, ' / ');
+                    clone.querySelector('.singleEvent span.lang').textContent = clone.querySelector('.singleEvent span.lang').textContent.replace(/\s+/, ' / ');*/
+
+                    let langSpan = document.createElement('span');
+                    langSpan.className = "lang normal-text";
+                    let langImg = document.createElement('img');
+                    langImg.classList.add('wrong');
+                    langImg.setAttribute('src', "img/lang-icon_50.png");
+                    langImg.setAttribute('alt', "langIcon");
+                    langImg.classList.add('lang-icon');
+                    clone.appendChild(langImg);
+                    clone.appendChild(langSpan);
+                    langSpan.textContent
+                    for (let i=0; i<cfValue.length; i++){
+                        langSpan.textContent += cfValue[i];
+                        langSpan.textContent += " ";
+                    }
+                    clone.querySelector('span.lang').textContent = clone.querySelector('span.lang').textContent.replace(/\s+/g, ' / ').slice(0, -2); // remove the last /
                 } else if(cf == "language" && cfValue.length ==1 ){
                     let langSpan = document.createElement('span');
                     langSpan.className = "lang";
