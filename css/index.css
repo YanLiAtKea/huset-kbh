@@ -196,7 +196,7 @@ a.chosen p {
 }
 .calendar .by-date {
     text-align: left;
-    z-index: 7;
+    z-index: 103;
     color: var(--purple);
     transform: translate(5px) rotate(-90deg);
 }
