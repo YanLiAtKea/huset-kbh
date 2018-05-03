@@ -1,4 +1,5 @@
 let firstLoad = true;
+let firstPostLoad = false;
 if(firstLoad == true && window.location.href.indexOf('category') < 0){
     console.log('show ani');
     showLoadingAnimation();
@@ -19,18 +20,21 @@ function showLoadingAnimation(){
 
 function endLoadingAnimation(){
     console.log('end animation');
-    document.querySelector('.verti-icon').classList.add('hide');
-    document.querySelector('.dark-green').classList.remove('load');
-    document.querySelector('.purple').classList.remove('load');
-    document.querySelector('img.pink').classList.remove('load');
-    setTimeout(function(){ document.querySelector('.by-type').classList.remove('hide');}, 250);
-    setTimeout(function(){ document.querySelector('.by-date').classList.remove('hide');}, 250);
-    setTimeout(function(){ document.querySelector('.current-type').classList.remove('hide');}, 250);
-    setTimeout(function(){ document.querySelector('.by-date').classList.remove('hide'); }, 250);
-    setTimeout(function(){ document.querySelector('.tri').classList.add('hide');}, 200);
-    setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
-    }, 200);
     firstLoad = false;
+    setTimeout(hideAni, 1700);
+    function hideAni(){
+        document.querySelector('.verti-icon').classList.add('hide');
+        document.querySelector('.dark-green').classList.remove('load');
+        document.querySelector('.purple').classList.remove('load');
+        document.querySelector('.pink').classList.remove('load');
+        document.querySelector('.by-type').classList.remove('hide');
+        document.querySelector('.by-date').classList.remove('hide');
+        document.querySelector('.current-type').classList.remove('hide');
+        document.querySelector('.by-date').classList.remove('hide');
+        document.querySelector('.tri').classList.add('hide');
+    }
+    setTimeout(function(){ document.querySelector('main').classList.remove('hide-main');
+    }, 1500);
 }
 
 
@@ -264,6 +268,7 @@ function showSingleEvent(singleEvent){
                     }
                 }
                 clone.querySelector('.singleEvent').appendChild(p);
+                firstPostLoad = true;
             }
         }
         eventList.appendChild(clone);
