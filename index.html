@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="Description" content="All the cultural events held at Huset-KBH. Location: Huset copenhagen, Address: Address: Rådhusstræde 13 1466 København, Type of place: cultural center" />
+
     <title>Events at Huset-KBH</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/img.css">
     <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/animation.css">
 </head>
 <body>
+    <img class="tri hide" src="img/tri.png">
+    <img class="verti-icon hide" src=img/corner-icon_100.png alt="huset's logo and tag line">
+    <img class="bg-triangle pink" src="img/pink.png" alt="background image with color">
     <img class="bg-triangle dark-green" src="img/dark-green.png" alt="background image with color">
     <img class="bg-triangle purple" src="img/purple.png" alt="background image with color">
-    <img class="corner-icon" src="img/corner-icon_hori_color_400.jpg" alt="cornor icon">
     <aside>
         <p class="close-by-type">X</p>
         <p class="by-type">SEARCH<br> by TYPE:</p>
@@ -78,25 +82,25 @@
 
     </div>
     <main>
-       <img class="triangle" src="img/triangle_300.png" alt="background image element">
-       <div class="eventList"></div>
-       <template class="singleEvent">
+        <img class="corner-icon" src="img/corner-icon_hori_color_400.jpg" alt="cornor icon">
+        <img class="triangle" src="img/triangle_300.png" alt="background image element">
+        <div class="eventList"></div>
+        <template class="singleEvent">
            <div class="singleEvent">
                <h2></h2><img class="event-type-icon" src="" alt="event type icon">
                <h1></h1>
                <span class="hide"></span>
                <img class="featuredImg" src="">
            </div>
-       </template>
-       <template class="singleEventOnDate">
+        </template>
+        <template class="singleEventOnDate">
            <div class="singleEventOnDate">
                <h2></h2><img class="event-type-icon" src="" alt="event type icon">
                <h1></h1>
                <span class="hide"></span>
                <img class="featuredImg" src="">
            </div>
-       </template>
-
+        </template>
     </main>
     <section class="logo-map">
         <a href="https://www.google.dk/maps/place/Huset-KBH/@55.6763715,12.5725261,17z/data=!3m1!4b1!4m5!3m4!1s0x4652531164a3fb89:0xdb78617809263eb5!8m2!3d55.6763715!4d12.5747148" target="_blank"> map

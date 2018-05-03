@@ -1,9 +1,10 @@
 .tri {
+    width: 26px;
     transform-origin: center right;
     animation: flash 2s infinite ease-out;
     position: fixed;
-    top: 460px;
-    left: 30px;
+    top: 50px;
+    right: 80px;
 }
 @keyframes flash {
     0%, 100% {
@@ -23,21 +24,20 @@ img.dark-green.load {
     opacity: .9;
     width: 160px;
 }
-img.pink.load {
-    top: 480px;
-    left: 80px;
-    width: 94px;
-}
 img.pink {
-    bottom: 0;
-    z-index: 3;
-    width: 54px;
-    left: 114px;
-    transition: all .1s ease-out;
+    display: none;
+}
+img.pink.load {
+    display: inherit;
+    position: fixed;
+    top: 50px;
+    right: 60px;
+    width: 110px;
+    z-index: -1;
 }
 .verti-icon {
     position: fixed;
-    left: 50vw;
+    right: 80px;
     top: 20px;
 }
 .bg-triangle {
