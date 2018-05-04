@@ -36,6 +36,7 @@ function endLoadingAnimation(){
         document.querySelector('.by-date').classList.remove('hide');
         document.querySelector('.current-type').classList.remove('hide');
         document.querySelector('.by-date').classList.remove('hide');
+        document.querySelector('.map').classList.remove('hide');
         clearTimeout(hideAniTimmeout2);
     }
 }
@@ -369,7 +370,7 @@ function auto(){
         }
     }
     let monthsToAssign = document.querySelectorAll('.days .day:nth-of-type(1)');
-    for(i=1; i<12; i++){
+    for(let i=1; i<12; i++){
         monthsToAssign[i].style.gridColumnStart = gridStarts[i];
     }
 }
@@ -515,7 +516,7 @@ function clickOnDay(d){
         // find matching event(s)
         let newEventList = document.createElement('div');
         let idS = d.classList;
-        for(i=0; i<idS.length; i++){
+        for(let i=0; i<idS.length; i++){
             if(idS[i].indexOf('id')>-1){
                 let id = idS[i].slice(2);
                 fetch("https://onestepfurther.nu/cms/wp-json/wp/v2/posts/" + id + "?_embed")

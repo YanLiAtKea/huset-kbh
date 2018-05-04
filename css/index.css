@@ -218,6 +218,14 @@ main {
     width: 100%;
     z-index: 3;
 }
+img.map {
+    z-index: 0;
+    position: fixed;
+    bottom: -40px;
+    width: 50vw;
+    max-width: 200px;
+    right: -10px;
+}
 .date-filter {
     z-index: 12;
     width: 230px;
