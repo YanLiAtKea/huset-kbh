@@ -1,3 +1,5 @@
+@media screen and (min-width: 320px) and (max-width: 500px){
+
 * {
     margin: 0;
     padding: 0;
@@ -62,11 +64,12 @@ img.dark-green.big {
 }
 .corner-icon {
     position: fixed;
-    width: 100vw;
-    max-width: 450px;
+    width: 80vw;
+    max-width: 400px;
+    min-width: 300px;
     height: auto;
     z-index: 2;
-    left: 2px;
+    left: 83px;
     bottom: 0;
 }
 ul {
@@ -209,6 +212,7 @@ main {
 }
 .triangle {
     width: 70%;
+    max-width: 290px;
     position: fixed;
     top: -53px;
 }
@@ -366,7 +370,7 @@ h2 {
 } */
 .event-type-icon {
     float: right;
-    width: 37px;
+    width: 31px;
     top: -10px;
 }
 .featuredImg {
@@ -404,3 +408,5 @@ a.inline {
 .d0101 {
     grid-column-start: 2;
 }
+
+    }
